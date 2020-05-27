@@ -1,5 +1,6 @@
 #pragma once
 #include <stdint.h>
+#include <stdbool.h>
 #include <math.h>
 
 
@@ -11,16 +12,11 @@ typedef struct bloque
   int particion; //1, 2, 3, 4
 }Bloque;
 
-typedef struct particion
-{
-  int inicio;
-  int final;
-  Bloque **array_bloques;
-}Particion;
+
 
 typedef struct disco
 {
-  Particion **array_particiones;
+    Bloque **array_bloques;
 }Disco;
 
 
@@ -30,6 +26,6 @@ typedef struct crFILE
 }crFILE;
 
 void cr_mount(char *diskname);
-Particion* particion_init(int n, int inicio, int final, unsigned char* bytes, Particion **particiones);
 Disco* disco_init(char *filename);
-Bloque* bloque_init(int i, int tipo_bloque, unsigned char *array_bytes, Bloque **bloques, int particion);
+Bloque* bloque_init(int i, int tipo_bloque, unsigned char *array_bytes, int particion);
+void cr_bitmap(unsigned disk, bool hex);
