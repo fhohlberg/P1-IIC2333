@@ -13,6 +13,6 @@ int main(int argc, char *argv[]){
   char* diskname = argv[1];
   cr_mount(diskname);
   //cr_bitmap(1, true); //unsigned disk, bool hex (0 = binario, 1 = hexadecimal)
-  cr_exists(1,"Baroque.mp3");
-  //cr_ls(1);
+  //printf("%d",cr_exists(1,"Baroque.mp3"));
+  cr_ls(1);
 }

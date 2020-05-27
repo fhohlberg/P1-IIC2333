@@ -322,8 +322,10 @@ void cr_ls(unsigned disk){
       }
       inicio += 32;
       final += 32;
-      if(disco -> array_bloques[0] -> array_bytes[inicio] != 0)
-        fprintf(stderr,"\n");
+      if (inicio < 256 * 32){
+        if(disco -> array_bloques[0] -> array_bytes[inicio] != 0)
+          fprintf(stderr,"\n");
+      }
     }
     fprintf(stderr,"\n");
   }
@@ -336,8 +338,10 @@ void cr_ls(unsigned disk){
       }
       inicio += 32;
       final += 32;
-      if(disco -> array_bloques[65536] -> array_bytes[inicio] != 0)
-        fprintf(stderr,"\n");
+      if (inicio < 256 * 32){
+        if(disco -> array_bloques[65536] -> array_bytes[inicio] != 0)
+          fprintf(stderr,"\n");
+      }
     }
     fprintf(stderr,"\n");
   }
@@ -350,8 +354,10 @@ void cr_ls(unsigned disk){
       }
       inicio += 32;
       final += 32;
-      if(disco -> array_bloques[131072] -> array_bytes[inicio] != 0)
-        fprintf(stderr,"\n");
+      if (inicio < 256 * 32){
+        if(disco -> array_bloques[131072] -> array_bytes[inicio] != 0)
+          fprintf(stderr,"\n");
+      }
     }
     fprintf(stderr,"\n");
   }
@@ -364,8 +370,10 @@ void cr_ls(unsigned disk){
       }
       inicio += 32;
       final += 32;
-      if(disco -> array_bloques[196608] -> array_bytes[inicio] != 0)
-        fprintf(stderr,"\n");
+      if (inicio < 256 * 32){
+        if(disco -> array_bloques[196608] -> array_bytes[inicio] != 0)
+          fprintf(stderr,"\n");
+      }
     }
     fprintf(stderr,"\n");
   }
