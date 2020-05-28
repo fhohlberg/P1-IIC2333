@@ -37,12 +37,11 @@ Bloque* bloque_init(int i, int tipo_bloque, unsigned char *bytes_malloc, int par
 }
 
 
-Disco* disco_init(char *filename){
+Disco* disco_init(char *filename, unsigned disk){
 
   Disco* disco = malloc(sizeof(disco));
   disco -> array_bloques = malloc(sizeof(Bloque*)*((int)pow(2,18))); 
    
-
   unsigned char bytes[(int)pow(2,13)];
   FILE *archivo = fopen(filename, "rb");
   int tipo_bloque = 5;
@@ -51,48 +50,62 @@ Disco* disco_init(char *filename){
   unsigned char *bytes_malloc = malloc(sizeof(unsigned char)*(int)pow(2,13));
   int particion = 0;
 
+  int i = 0;
+  while(fread(bytes,sizeof(bytes),1,archivo)){
 
-  for(int i = 0; i<(int)pow(2,1); i++){ 
-      fread(bytes,sizeof(bytes),1,archivo);
+    if (i == 0){
+      tipo_bloque = 1; // DIRECTORIO
+    }if (i == 1){
+      tipo_bloque = 2; // BITMAP
+    }if (i == 65536){
+      tipo_bloque = 1; // DIRECTORIO
+    }
+    if (i == 65537){
+      tipo_bloque = 2; // BITMAP
+    }
+    if (i == 131072){
+      tipo_bloque = 1; // DIRECTORIO
+    }
+    if (i == 131073){
+      tipo_bloque = 2; // BITMAP
+    }
+    if (i == 196608){
+      tipo_bloque = 1; // DIRECTORIO
+    }
+    if (i == 196609){
+      tipo_bloque = 2; // BITMAP
+    }
+
+    printf("Leyendo el %d bloque.\n", i);
+    if (disk == 1 && i < 65536){
+      particion = 1;
       for(int j = 0; j < (int)pow(2,13); j++){
         bytes_malloc[j] = bytes[j];
       }
-      if (i == 0){
-        tipo_bloque = 1; // DIRECTORIO
-      }if (i == 1){
-        tipo_bloque = 2; // BITMAP
-      }if (i == 65536){
-        tipo_bloque = 1; // DIRECTORIO
+      disco -> array_bloques[i] = bloque_init(i, tipo_bloque, bytes_malloc, particion); 
+    }else if (disk == 2 && i < 131072 && i >= 65536){
+      particion = 2;
+      for(int j = 0; j < (int)pow(2,13); j++){
+        bytes_malloc[j] = bytes[j];
       }
-      if (i == 65537){
-        tipo_bloque = 2; // BITMAP
-      }
-      if (i == 131072){
-        tipo_bloque = 1; // DIRECTORIO
-      }
-      if (i == 131073){
-        tipo_bloque = 2; // BITMAP
-      }
-      if (i == 196608){
-        tipo_bloque = 1; // DIRECTORIO
-      }
-      if (i == 196609){
-        tipo_bloque = 2; // BITMAP
-      }
-
-      if(i < 65536){
-        particion = 1;
-      }else if (i < 131072){
-        particion = 2;
-      }else if (i<196608){
-        particion= 3;
-      }else{
-        particion = 4;
-      }
-      disco -> array_bloques[i] = bloque_init(i, tipo_bloque, bytes_malloc, particion);
-      final_bloque += (int)pow(2,13);
-      inicio_bloque = final_bloque - (int)pow(2,13)*(i);
+      disco -> array_bloques[i] = bloque_init(i, tipo_bloque, bytes_malloc, particion); 
     }
+    else if (disk == 3 && i < 196608 && i >= 131072){
+      particion= 3;
+      for(int j = 0; j < (int)pow(2,13); j++){
+        bytes_malloc[j] = bytes[j];
+      }
+      disco -> array_bloques[i] = bloque_init(i, tipo_bloque, bytes_malloc, particion); 
+    }else if (disco == 4 && i < 262144 && i >= 196608){
+      particion = 4;
+      for(int j = 0; j < (int)pow(2,13); j++){
+        bytes_malloc[j] = bytes[j];
+      }
+      disco -> array_bloques[i] = bloque_init(i, tipo_bloque, bytes_malloc, particion); 
+    }
+
+    i++;
+  }
 
   fclose(archivo);
   return disco;
@@ -107,7 +120,7 @@ void cr_mount(char *diskname){
 
 void cr_bitmap(unsigned disk, bool hex){
   //printf("%s\n", path_disk);
-  Disco* disco = disco_init(path_disk);
+  Disco* disco = disco_init(path_disk, disk);
   //BINARIO
   if(hex == false){
     int libres = 0;
@@ -232,7 +245,7 @@ void cr_bitmap(unsigned disk, bool hex){
   }
 }
 int cr_exists(unsigned disk, char* filename){
-  Disco* disco = disco_init(path_disk);
+  Disco* disco = disco_init(path_disk, disk);
   if(disk == 1){
     char file_disco[29];
     int inicio = 3;
@@ -312,7 +325,7 @@ int cr_exists(unsigned disk, char* filename){
 }
 
 void cr_ls(unsigned disk){
-  Disco* disco = disco_init(path_disk);
+  Disco* disco = disco_init(path_disk, disk);
   if(disk == 1){
     int inicio = 3;
     int final = 32;
