@@ -31,7 +31,8 @@ int main(int argc, char *argv[]){
   //cr_open(2, "hola.txt", 'w');
   //cr_open(3, "hola.txt", 'w');
   //cr_open(4, "hola.txt", 'w');
-  cr_open(1, "guides.txt", 'r');
+  crFILE * file = cr_open(1, "Baroque.mp3", 'r');
+  cr_read(file, 0, 24000);
   //cr_open(3, "hola.txt", 'w');
   //cr_open(4, "hola.txt", 'w');
 

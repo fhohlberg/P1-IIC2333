@@ -25,6 +25,8 @@ typedef struct crFILE
   int tamano; //tamano en Bytes
   int hardlinks;//cantidad de hardlinks
   unsigned char* data; //contenido del file
+  int pos_lect; //posicion de lectura del archivo
+  int bloque_indice; //
 }crFILE;
 
 void cr_mount(char *diskname);
@@ -35,4 +37,5 @@ void cr_bitmap(unsigned disk, bool hex);
 int cr_exists(unsigned disk, char* filename);
 void cr_ls(unsigned disk);
 crFILE* cr_open(unsigned disk, char* filename, char mode);
+int cr_read(crFILE* file_desc, void* buffer, int nbytes);
 void print_file(crFILE* file);

@@ -74,8 +74,8 @@ void print_file(crFILE* file){
   fprintf(stderr, "Nombre archivo: %s  Tamaño archivo: %d Bytes\n", file -> nombre, file -> tamano);
   fprintf(stderr, "Cantidad de Hardlinks: %d\n", file -> hardlinks);
   fprintf(stderr, "-----------------------------------------------------------\n");
-  for (int i = 0; i < file -> tamano; i++)
-    fprintf(stderr, "%c", file -> data[i]);
+  //for (int i = 0; i < file -> tamano; i++)
+    //fprintf(stderr, "%c", file -> data[i]);
 }
 
 Bloque* bloque_init(int i, int tipo_bloque, unsigned char *bytes_malloc){
@@ -617,6 +617,7 @@ crFILE* cr_open(unsigned disk, char* filename, char mode){
       //fprintf(stderr, "\n");
       if (bits_entrada[0] == 1){
         crFILE* file = malloc(sizeof(crFILE));
+        file -> pos_lect = 0;
         file -> nombre = filename;
         int bits_puntero[23];
         for(int i = 0; i < 23; i ++){
@@ -646,6 +647,7 @@ crFILE* cr_open(unsigned disk, char* filename, char mode){
         }
         tamano = bits_to_int(bits_tam, 64);
         file -> tamano = tamano;
+        //fprintf(stderr, "\nLeyendo %d Bytes del archivo: %s\n", file -> tamano, file -> nombre);
         //fprintf(stderr, "\n");
         //fprintf(stderr, "%d\n", tamano);
         if(file -> tamano != 0){
@@ -810,5 +812,25 @@ crFILE* cr_open(unsigned disk, char* filename, char mode){
     }
     return 0;
   }
+}
+
+int cr_read(crFILE* file, void* buffer, int nbytes){
+  int bytes_restantes = file -> tamano - file -> pos_lect;
+  int inicio = file ->  pos_lect;
+  if(nbytes > bytes_restantes){
+    file -> pos_lect += bytes_restantes;
+
+  }
+  else{
+    file -> pos_lect += nbytes;
+    bytes_restantes = nbytes;
+  }
+  //fprintf(stderr, "\nLeyendo %d Bytes del archivo: %s\n", bytes_restantes, file -> nombre);
+  for(int i = inicio; i < file -> pos_lect; i++){
+    fprintf(stderr, "%u ", file -> data[i]);
+  }
+
+  return bytes_restantes;
+
 }
   
