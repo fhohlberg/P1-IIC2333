@@ -544,6 +544,7 @@ crFILE* cr_open(unsigned disk, char* filename, char mode){
           inicio += 32;
         }
         print_file(file);
+        return file;
       }
       else{
         fprintf(stderr, "El archivo %s ha sido eliminado.\n", filename);
@@ -553,6 +554,5 @@ crFILE* cr_open(unsigned disk, char* filename, char mode){
       fprintf(stderr, "El archivo %s no estiste.\n", filename);
     }
   }
-  return 0;
 }
   
