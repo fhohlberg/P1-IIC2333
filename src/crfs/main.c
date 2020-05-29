@@ -28,7 +28,12 @@ int main(int argc, char *argv[]){
   printf("Directorio disco 4\n");
   cr_ls(4);*/
   //printf("%d\n", cr_exists(1, "Baroque.mp3"));
+  //cr_open(2, "hola.txt", 'w');
+  //cr_open(3, "hola.txt", 'w');
+  //cr_open(4, "hola.txt", 'w');
   cr_open(1, "guides.txt", 'r');
+  //cr_open(3, "hola.txt", 'w');
+  //cr_open(4, "hola.txt", 'w');
 
 
   /*printf("Estoy en disco 2\n");
