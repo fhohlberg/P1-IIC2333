@@ -25,8 +25,9 @@ typedef struct crFILE
 }crFILE;
 
 void cr_mount(char *diskname);
-Disco* disco_init(char *filename, unsigned disk);
-Bloque* bloque_init(int i, int tipo_bloque, unsigned char *array_bytes, int particion);
+Disco* disco_init(char *filename);
+void cargar_bloque(Disco* disco, int bloque);
+Bloque* bloque_init(int i, int tipo_bloque, unsigned char *array_bytes);
 void cr_bitmap(unsigned disk, bool hex);
 int cr_exists(unsigned disk, char* filename);
 void cr_ls(unsigned disk);
