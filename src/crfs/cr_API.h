@@ -21,7 +21,10 @@ typedef struct disco
 
 typedef struct crFILE
 {
-  char *nombre_archivo;
+  char *nombre;
+  int tamano; //tamano en Bytes
+  int hardlinks;//cantidad de hardlinks
+  unsigned char* data; //contenido del file
 }crFILE;
 
 void cr_mount(char *diskname);
@@ -31,3 +34,5 @@ Bloque* bloque_init(int i, int tipo_bloque, unsigned char *array_bytes);
 void cr_bitmap(unsigned disk, bool hex);
 int cr_exists(unsigned disk, char* filename);
 void cr_ls(unsigned disk);
+crFILE* cr_open(unsigned disk, char* filename, char mode);
+void print_file(crFILE* file);

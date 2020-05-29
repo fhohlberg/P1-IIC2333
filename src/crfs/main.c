@@ -5,17 +5,13 @@
 #include "cr_API.h"
 
 
-// Variables Globales //
-  //char *path_disk = "/discos/";
-//
-
 int main(int argc, char *argv[]){
   char* diskname = argv[1];
   cr_mount(diskname);
   //cr_bitmap(1, true); //unsigned disk, bool hex (true = binario, false = hexadecimal)
   //printf("%d",cr_exists(1,"Baroque.mp3"));
   //printf("Estoy en disco 1\n");
-  printf("Directorio disco 1\n");
+  /*printf("Directorio disco 1\n");
   cr_ls(1);
   printf("BITMAP  binario disco 1\n");
   cr_bitmap(1, false); //unsigned disk, bool hex (true = binario, false = hexadecimal)
@@ -30,7 +26,9 @@ int main(int argc, char *argv[]){
   printf("Directorio disco 3\n");
   cr_ls(3);
   printf("Directorio disco 4\n");
-  cr_ls(4);
+  cr_ls(4);*/
+  //printf("%d\n", cr_exists(1, "Baroque.mp3"));
+  cr_open(1, "guides.txt", 'r');
 
 
   /*printf("Estoy en disco 2\n");
