@@ -7,12 +7,18 @@
 
 // Variables Globales //
   char path_disk[255];
-
-
+  Disco* disco1;
+  Disco* disco2;
+  Disco* disco3;
+  Disco* disco4;
+  int disco1_cargado = 0;
+  int disco2_cargado = 0;
+  int disco3_cargado = 0;
+  int disco4_cargado = 0;
 
 
 Bloque* bloque_init(int i, int tipo_bloque, unsigned char *bytes_malloc, int particion){
-  
+
   Bloque* bloque = malloc(sizeof(Bloque));
   bloque -> array_bytes = malloc(sizeof(unsigned char)* (int)pow(2,13));
   bloque -> array_bits= malloc(sizeof(int)* (int)pow(2,13)*8);
@@ -40,8 +46,8 @@ Bloque* bloque_init(int i, int tipo_bloque, unsigned char *bytes_malloc, int par
 Disco* disco_init(char *filename, unsigned disk){
 
   Disco* disco = malloc(sizeof(disco));
-  disco -> array_bloques = malloc(sizeof(Bloque*)*((int)pow(2,18))); 
-   
+  disco -> array_bloques = malloc(sizeof(Bloque*)*((int)pow(2,18)));
+
   unsigned char bytes[(int)pow(2,13)];
   FILE *archivo = fopen(filename, "rb");
   int tipo_bloque = 5;
@@ -51,6 +57,9 @@ Disco* disco_init(char *filename, unsigned disk){
   int particion = 0;
 
   int i = 0;
+
+  printf("Leyendo el disco: %d ... queda 1 min 30 s\n", disk);
+
   while(fread(bytes,sizeof(bytes),1,archivo)){
 
     if (i == 0){
@@ -76,32 +85,35 @@ Disco* disco_init(char *filename, unsigned disk){
       tipo_bloque = 2; // BITMAP
     }
 
-    printf("Leyendo el %d bloque.\n", i);
     if (disk == 1 && i < 65536){
+      //printf("Leyendo el %d bloque.\n", i);
       particion = 1;
       for(int j = 0; j < (int)pow(2,13); j++){
         bytes_malloc[j] = bytes[j];
       }
-      disco -> array_bloques[i] = bloque_init(i, tipo_bloque, bytes_malloc, particion); 
+      disco -> array_bloques[i] = bloque_init(i, tipo_bloque, bytes_malloc, particion);
     }else if (disk == 2 && i < 131072 && i >= 65536){
+      //printf("Leyendo el %d bloque.\n", i);
       particion = 2;
       for(int j = 0; j < (int)pow(2,13); j++){
         bytes_malloc[j] = bytes[j];
       }
-      disco -> array_bloques[i] = bloque_init(i, tipo_bloque, bytes_malloc, particion); 
+      disco -> array_bloques[i] = bloque_init(i, tipo_bloque, bytes_malloc, particion);
     }
     else if (disk == 3 && i < 196608 && i >= 131072){
+      //printf("Leyendo el %d bloque.\n", i);
       particion= 3;
       for(int j = 0; j < (int)pow(2,13); j++){
         bytes_malloc[j] = bytes[j];
       }
-      disco -> array_bloques[i] = bloque_init(i, tipo_bloque, bytes_malloc, particion); 
-    }else if (disco == 4 && i < 262144 && i >= 196608){
+      disco -> array_bloques[i] = bloque_init(i, tipo_bloque, bytes_malloc, particion);
+    }else if (disk == 4 && i < 262144 && i >= 196608){
+      //printf("Leyendo el %d bloque.\n", i);
       particion = 4;
       for(int j = 0; j < (int)pow(2,13); j++){
         bytes_malloc[j] = bytes[j];
       }
-      disco -> array_bloques[i] = bloque_init(i, tipo_bloque, bytes_malloc, particion); 
+      disco -> array_bloques[i] = bloque_init(i, tipo_bloque, bytes_malloc, particion);
     }
 
     i++;
@@ -116,63 +128,80 @@ void cr_mount(char *diskname){
   char buff[255];
   sprintf(buff, "discos/%s", diskname);
   strcpy(path_disk, buff);
+  //disco1 = disco_init(path_disk, 1);
+  //disco2 = disco_init(path_disk, 2);
+  //disco3 = disco_init(path_disk, 3);
+  //disco4 = disco_init(path_disk, 4);
 }
 
 void cr_bitmap(unsigned disk, bool hex){
-  //printf("%s\n", path_disk);
-  Disco* disco = disco_init(path_disk, disk);
-  //BINARIO
   if(hex == false){
     int libres = 0;
     int ocupadas = 0;
     if(disk == 1 || disk == 0){
+      if (disco1_cargado == 0){
+        disco1 = disco_init(path_disk, 1);
+        disco1_cargado = 1;
+      }
       libres = 0;
       ocupadas = 0;
       for( int j = 0; j < ((int) pow(2,13))*8; j++){
-        fprintf(stderr, "%d", disco -> array_bloques[1]-> array_bits[j]);
-        if(disco -> array_bloques[1]-> array_bits[j] == 0)
+        fprintf(stderr, "%d", disco1 -> array_bloques[1]-> array_bits[j]);
+        if(disco1 -> array_bloques[1]-> array_bits[j] == 0)
           libres += 1;
         else
-          ocupadas += 1; 
+          ocupadas += 1;
       }
       fprintf(stderr, "\n\nPARTICIÓN NÚMERO: %d\n", disk);
       fprintf(stderr, "\nCANTIDAD BLOQUES LIBRES: %d\nCANTIDAD BLOQUES OCUPADOS: %d\n", libres, ocupadas);
     }
     if(disk == 2 || disk == 0){
+      if (disco2_cargado == 0){
+        disco2 = disco_init(path_disk, 2);
+        disco2_cargado = 1;
+      }
       libres = 0;
       ocupadas = 0;
       for( int j = 0; j < ((int) pow(2,13))*8; j++){
-        fprintf(stderr, "%d", disco -> array_bloques[65537]-> array_bits[j]);
-        if(disco -> array_bloques[65537]-> array_bits[j] == 0)
+        fprintf(stderr, "%d", disco2 -> array_bloques[65537]-> array_bits[j]);
+        if(disco2 -> array_bloques[65537]-> array_bits[j] == 0)
           libres += 1;
         else
-          ocupadas += 1; 
+          ocupadas += 1;
       }
       fprintf(stderr, "\n\nPARTICIÓN NÚMERO: %d\n", disk);
       fprintf(stderr, "\nCANTIDAD BLOQUES LIBRES: %d\nCANTIDAD BLOQUES OCUPADOS: %d\n", libres, ocupadas);
     }
     if(disk == 3 || disk == 0){
+      if (disco3_cargado == 0){
+        disco3 = disco_init(path_disk, 3);
+        disco3_cargado = 1;
+      }
       libres = 0;
       ocupadas = 0;
       for( int j = 0; j < ((int) pow(2,13))*8; j++){
-        fprintf(stderr, "%d", disco -> array_bloques[131073]-> array_bits[j]);
-        if(disco -> array_bloques[131073]-> array_bits[j] == 0)
+        fprintf(stderr, "%d", disco3 -> array_bloques[131073]-> array_bits[j]);
+        if(disco3 -> array_bloques[131073]-> array_bits[j] == 0)
           libres += 1;
         else
-          ocupadas += 1; 
+          ocupadas += 1;
       }
       fprintf(stderr, "\n\nPARTICIÓN NÚMERO: %d\n", disk);
       fprintf(stderr, "\nCANTIDAD BLOQUES LIBRES: %d\nCANTIDAD BLOQUES OCUPADOS: %d\n", libres, ocupadas);
     }
     if(disk == 4 || disk == 0){
+      if (disco4_cargado == 0){
+        disco4 = disco_init(path_disk, 4);
+        disco4_cargado = 1;
+      }
       libres = 0;
       ocupadas = 0;
       for( int j = 0; j < ((int) pow(2,13))*8; j++){
-        fprintf(stderr, "%d", disco -> array_bloques[196609]-> array_bits[j]);
-        if(disco -> array_bloques[196609]-> array_bits[j] == 0)
+        fprintf(stderr, "%d", disco4 -> array_bloques[196609]-> array_bits[j]);
+        if(disco4 -> array_bloques[196609]-> array_bits[j] == 0)
           libres += 1;
         else
-          ocupadas += 1; 
+          ocupadas += 1;
       }
       fprintf(stderr, "\n\nPARTICIÓN NÚMERO: %d\n", disk);
       fprintf(stderr, "\nCANTIDAD BLOQUES LIBRES: %d\nCANTIDAD BLOQUES OCUPADOS: %d\n", libres, ocupadas);
@@ -183,77 +212,98 @@ void cr_bitmap(unsigned disk, bool hex){
     int libres = 0;
     int ocupadas = 0;
     if(disk == 1 || disk == 0){
+      if (disco1_cargado == 0){
+        disco1 = disco_init(path_disk, 1);
+        disco1_cargado = 1;
+      }
       libres = 0;
       ocupadas = 0;
       for( int j = 0; j < ((int) pow(2,13)); j++){
-        fprintf(stderr, "%04X\n", disco -> array_bloques[1]-> array_bytes[j]);
+        fprintf(stderr, "%04X", disco1 -> array_bloques[1]-> array_bytes[j]);
       }
       for( int j = 0; j < ((int) pow(2,13))*8; j++){
-        if(disco -> array_bloques[1]-> array_bits[j] == 0)
+        if(disco1 -> array_bloques[1]-> array_bits[j] == 0)
           libres += 1;
         else
-          ocupadas += 1; 
+          ocupadas += 1;
       }
       fprintf(stderr, "\n\nPARTICIÓN NÚMERO: %d\n", disk);
       fprintf(stderr, "\nCANTIDAD BLOQUES LIBRES: %d\nCANTIDAD BLOQUES OCUPADOS: %d\n", libres, ocupadas);
     }
     if(disk == 2 || disk == 0){
+      if (disco2_cargado == 0){
+        disco2 = disco_init(path_disk, 2);
+        disco2_cargado = 1;
+      }
       libres = 0;
       ocupadas = 0;
       for( int j = 0; j < ((int) pow(2,13)); j++){
-        fprintf(stderr, "%04X\n", disco -> array_bloques[65537]-> array_bytes[j]);
+        fprintf(stderr, "%04X", disco2 -> array_bloques[65537]-> array_bytes[j]);
       }
       for( int j = 0; j < ((int) pow(2,13))*8; j++){
-        if(disco -> array_bloques[65537]-> array_bits[j] == 0)
+        if(disco2 -> array_bloques[65537]-> array_bits[j] == 0)
           libres += 1;
         else
-          ocupadas += 1; 
+          ocupadas += 1;
       }
       fprintf(stderr, "\n\nPARTICIÓN NÚMERO: %d\n", disk);
       fprintf(stderr, "\nCANTIDAD BLOQUES LIBRES: %d\nCANTIDAD BLOQUES OCUPADOS: %d\n", libres, ocupadas);
     }
     if(disk == 3 || disk == 0){
+      if (disco3_cargado == 0){
+        disco3 = disco_init(path_disk, 3);
+        disco3_cargado = 1;
+      }
       libres = 0;
       ocupadas = 0;
       for( int j = 0; j < ((int) pow(2,13)); j++){
-        fprintf(stderr, "%04X\n", disco -> array_bloques[131073]-> array_bytes[j]);
+        fprintf(stderr, "%04X", disco3 -> array_bloques[131073]-> array_bytes[j]);
       }
       for( int j = 0; j < ((int) pow(2,13))*8; j++){
-        if(disco -> array_bloques[131073]-> array_bits[j] == 0)
+        if(disco3 -> array_bloques[131073]-> array_bits[j] == 0)
           libres += 1;
         else
-          ocupadas += 1; 
+          ocupadas += 1;
       }
       fprintf(stderr, "\n\nPARTICIÓN NÚMERO: %d\n", disk);
       fprintf(stderr, "\nCANTIDAD BLOQUES LIBRES: %d\nCANTIDAD BLOQUES OCUPADOS: %d\n", libres, ocupadas);
     }
     if(disk == 4 || disk == 0){
+      if (disco4_cargado == 0){
+        disco4 = disco_init(path_disk, 4);
+        disco4_cargado = 1;
+      }
       libres = 0;
       ocupadas = 0;
       for( int j = 0; j < ((int) pow(2,13)); j++){
-        fprintf(stderr, "%04X\n", disco -> array_bloques[196609]-> array_bytes[j]);
+        fprintf(stderr, "%04X", disco4 -> array_bloques[196609]-> array_bytes[j]);
       }
       for( int j = 0; j < ((int) pow(2,13))*8; j++){
-        if(disco -> array_bloques[196609]-> array_bits[j] == 0)
+        if(disco4 -> array_bloques[196609]-> array_bits[j] == 0)
           libres += 1;
         else
-          ocupadas += 1; 
+          ocupadas += 1;
       }
       fprintf(stderr, "\n\nPARTICIÓN NÚMERO: %d\n", disk);
       fprintf(stderr, "\nCANTIDAD BLOQUES LIBRES: %d\nCANTIDAD BLOQUES OCUPADOS: %d\n", libres, ocupadas);
     }
   }
 }
+
 int cr_exists(unsigned disk, char* filename){
-  Disco* disco = disco_init(path_disk, disk);
+  //Disco* disco = disco_init(path_disk, disk);
   if(disk == 1){
+    if (disco1_cargado == 0){
+      disco1 = disco_init(path_disk, 1);
+      disco1_cargado = 1;
+    }
     char file_disco[29];
     int inicio = 3;
     int final = 32;
     for(int i = 0; i < 256; i++){
       int distinta = 0;
       for(int j = inicio; j < final;j++){
-        file_disco[j-inicio] = (char) disco -> array_bloques[0] -> array_bytes[j];
+        file_disco[j-inicio] = (char) disco1 -> array_bloques[0] -> array_bytes[j];
       }
       if(strcmp(file_disco, filename) == 0){
         //printf("1\n");
@@ -266,13 +316,17 @@ int cr_exists(unsigned disk, char* filename){
     return 0;
   }
   if(disk == 2){
+    if (disco2_cargado == 0){
+      disco2 = disco_init(path_disk, 2);
+      disco2_cargado = 1;
+    }
     char file_disco[29];
     int inicio = 3;
     int final = 32;
     for(int i = 0; i < 256; i++){
       int distinta = 0;
       for(int j = inicio; j < final;j++){
-        file_disco[j-inicio] = (char) disco -> array_bloques[65536] -> array_bytes[j];
+        file_disco[j-inicio] = (char) disco2 -> array_bloques[65536] -> array_bytes[j];
       }
       if(strcmp(file_disco, filename) == 0){
         //printf("1\n");
@@ -285,13 +339,17 @@ int cr_exists(unsigned disk, char* filename){
     return 0;
   }
   if(disk == 3){
+    if (disco3_cargado == 0){
+      disco3 = disco_init(path_disk, 3);
+      disco3_cargado = 1;
+    }
     char file_disco[29];
     int inicio = 3;
     int final = 32;
     for(int i = 0; i < 256; i++){
       int distinta = 0;
       for(int j = inicio; j < final;j++){
-        file_disco[j-inicio] = (char) disco -> array_bloques[131072] -> array_bytes[j];
+        file_disco[j-inicio] = (char) disco3 -> array_bloques[131072] -> array_bytes[j];
       }
       if(strcmp(file_disco, filename) == 0){
         //printf("1\n");
@@ -304,13 +362,17 @@ int cr_exists(unsigned disk, char* filename){
     return 0;
   }
   if(disk == 4){
+    if (disco4_cargado == 0){
+      disco4 = disco_init(path_disk, 4);
+      disco4_cargado = 1;
+    }
     char file_disco[29];
     int inicio = 3;
     int final = 32;
     for(int i = 0; i < 256; i++){
       int distinta = 0;
       for(int j = inicio; j < final;j++){
-        file_disco[j-inicio] = (char) disco -> array_bloques[196608] -> array_bytes[j];
+        file_disco[j-inicio] = (char) disco4 -> array_bloques[196608] -> array_bytes[j];
       }
       if(strcmp(file_disco, filename) == 0){
         //printf("1\n");
@@ -325,66 +387,83 @@ int cr_exists(unsigned disk, char* filename){
 }
 
 void cr_ls(unsigned disk){
-  Disco* disco = disco_init(path_disk, disk);
+  //Disco* disco = disco_init(path_disk, disk);
   if(disk == 1){
+    if (disco1_cargado == 0){
+      disco1 = disco_init(path_disk, 1);
+      disco1_cargado = 1;
+    }
     int inicio = 3;
     int final = 32;
     for(int i = 0; i < 256; i++){
       for(int j = inicio; j < final;j++){
-        fprintf(stderr, "%c", disco -> array_bloques[0] -> array_bytes[j]);
+        fprintf(stderr, "%c", disco1 -> array_bloques[0] -> array_bytes[j]);
       }
       inicio += 32;
       final += 32;
       if (inicio < 256 * 32){
-        if(disco -> array_bloques[0] -> array_bytes[inicio] != 0)
+        if(disco1 -> array_bloques[0] -> array_bytes[inicio] != 0)
           fprintf(stderr,"\n");
       }
     }
     fprintf(stderr,"\n");
   }
+
   if(disk == 2){
+    if (disco2_cargado == 0){
+      disco2 = disco_init(path_disk, 2);
+      disco2_cargado = 1;
+    }
     int inicio = 3;
     int final = 32;
     for(int i = 0; i < 256; i++){
       for(int j = inicio; j < final;j++){
-        fprintf(stderr, "%c", disco -> array_bloques[65536] -> array_bytes[j]);
+        fprintf(stderr, "%c", disco2 -> array_bloques[65536] -> array_bytes[j]);
       }
       inicio += 32;
       final += 32;
       if (inicio < 256 * 32){
-        if(disco -> array_bloques[65536] -> array_bytes[inicio] != 0)
+        if(disco2 -> array_bloques[65536] -> array_bytes[inicio] != 0)
           fprintf(stderr,"\n");
       }
     }
     fprintf(stderr,"\n");
   }
   if(disk == 3){
+    if (disco3_cargado == 0){
+      disco3 = disco_init(path_disk, 3);
+      disco3_cargado = 1;
+    }
     int inicio = 3;
     int final = 32;
     for(int i = 0; i < 256; i++){
       for(int j = inicio; j < final;j++){
-        fprintf(stderr, "%c", disco -> array_bloques[131072] -> array_bytes[j]);
+        fprintf(stderr, "%c", disco3 -> array_bloques[131072] -> array_bytes[j]);
       }
       inicio += 32;
       final += 32;
       if (inicio < 256 * 32){
-        if(disco -> array_bloques[131072] -> array_bytes[inicio] != 0)
+        if(disco3 -> array_bloques[131072] -> array_bytes[inicio] != 0)
           fprintf(stderr,"\n");
       }
     }
     fprintf(stderr,"\n");
   }
   if(disk == 4){
+    if (disco4_cargado == 0){
+      disco4 = disco_init(path_disk, 4);
+      disco4_cargado = 1;
+    }
     int inicio = 3;
     int final = 32;
     for(int i = 0; i < 256; i++){
       for(int j = inicio; j < final;j++){
-        fprintf(stderr, "%c", disco -> array_bloques[196608] -> array_bytes[j]);
+        fprintf(stderr, "%c", disco4 -> array_bloques[196608] -> array_bytes[j]);
       }
       inicio += 32;
       final += 32;
       if (inicio < 256 * 32){
-        if(disco -> array_bloques[196608] -> array_bytes[inicio] != 0)
+        if(disco4 -> array_bloques[196608] -> array_bytes[inicio] != 0)
           fprintf(stderr,"\n");
       }
     }
