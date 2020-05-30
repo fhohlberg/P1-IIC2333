@@ -41,6 +41,18 @@ int cr_exists(unsigned disk, char* filename);
 void cr_ls(unsigned disk);
 crFILE* cr_open(unsigned disk, char* filename, char mode);
 int cr_read(crFILE* file_desc, void* buffer, int nbytes);
-void print_file(crFILE* file);
 int cr_write(crFILE* file, void* buffer, int nbytes);
-//int cr_unload(unsigned disk, char* orig, char* dest);
+int cr_unload(unsigned disk, char* orig, char* dest);
+
+int* byte_to_bits(unsigned char byte);
+
+int bits_to_int(int* bits, int n);
+
+unsigned char* int_to_bytes(int n, int cantidad_bytes);
+
+int* int_to_bits(int n, int cantidad_bytes);
+
+void print_file(crFILE* file);
+
+int cr_read_unload(crFILE* file, char* dest, int nbytes);
+

@@ -38,11 +38,14 @@ int main(int argc, char *argv[]){
   //printf("BUFFERR: %s\n", buffer);
 
   //cr_read(file,0,23708);
-  crFILE * file = cr_open(2, "text.txt", 'r');
+  //crFILE * file = cr_open(2, "text.txt", 'r');
   //cr_read(file,0, 23800);
-  cr_write(file, buffer, 18);
+  //cr_write(file, buffer, 18);
   //printf("\nENTREMEDIO\n");
-  cr_read(file,0, 23800);
+  //cr_read(file,0, 23800);
+
+  cr_unload(1, "heapsort.png", "/Users/francisca/Documents/ING 9 SEMESTRE/Sistemas Operativos y Redes/P1-IIC2333/heapsort.png");
+
 
 
 

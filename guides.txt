@@ -1,0 +1,147 @@
+Monkey Madness I
+
+Warning: Ape Atoll is one of the most dangerous areas in the game, until you obtain a monkey greegree. When going to Ape Atoll, bring plenty of food, antipoison potions, and an emergency teleport, in addition to other required items. Switching off Auto Retaliate and utilising protection prayers will greatly improve your chances of survival.
+
+This quest is divided into 4 chapters.
+
+Chapter 1
+
+Items required: 3 free inventory spaces, Gnome Royal Seal (to enter the Karamja Shipyard & convince Lumdo).
+
+"In which our hero/heroine finds himself/herself drawn back into Glough's web of deception and deceit."
+
+Talk to King Narnode Shareen. He will tell you to investigate Glough's old shipyard for any trace of the missing 10th squad and will give you the Gnome royal seal. Go to Karamja. You can take the glider at the top of the Grand Tree to Karamja (Gandius). If you do not have monkey bones (or a monkey corpse), there are nearby monkeys to the west to grab some from. Enter the Shipyard (north of the glider landing site) and talk with G.L.O. Caranock, a gnome who is located in the building in the southern area of the Shipyard, by the fence. He will act very suspiciously and advises you to return to the King. Return back to the King via glider. He will give you Narnode's orders and tell you to speak to Daero. There is a bank within the Grand Tree on the 2nd floor[US]. Use this time to bring some food, antipoison potions, and any other items to survive Ape Atoll (see recommended items above). Talk to Daero, the new head tree guardian, on the 2nd floor[US] of the Grand Tree, near Blurberry Bar to the east. Go through all the chat options and then tell him you're prepared to leave. He will blindfold you and take you to an underground hangar. Talk to Daero again who will introduce you to Waydar. Then, you will have to solve a "reinitialisation" puzzle. Do this by clicking on the panel to the south-east by the southern glider. Players can take some spare controls from the nearby crate to view the solution.
+
+The solution to the reinitialization puzzle.
+
+Solve the sliding puzzle.
+
+Begin by manoeuvring the 1, 2 and 3 into their proper positions in the upper left corner.
+Position the 4 in the upper right corner.
+Manoeuvre the 5 under the 4
+Now slide the 4 to the left and the 5 up; the first row is done.
+Repeat this process with next row, leaving row above intact.
+The pieces in the last two rows then need to be solved together, working left to right, completing the last rows as 2 tiles high columns.
+
+This is similar to the puzzle boxes from Treasure Trails, so if you have done those before, this sliding puzzle will be easy to complete. If you cannot solve the puzzle or do not want to spend your time with it, bring 200,000 coins and go to Glough. Glough still resides where he did during the Grand Tree quest. If you pay Glough, return back to the hangar via Daero; Glough will leave you one tile to slide to complete it. Talk to Daero, then Waydar. The two of you will make landing on Crash Island, where the 10th Squad crash landed. Ask Lumdo to sail to Ape Atoll. As he has conflicting orders from his sergeant, Garkor, he will refuse to take you. Talk to Waydar (watch out for poisonous scorpions just to his left, and be wary of clicking "Travel", as this will bring you back to the Grand tree prematurely). Speak with Lumdo again, and he will now agree to take you to Ape Atoll.
+
+Caranock speaks with the foreman.
+Chapter 2
+"In which our hero/heroine finds themselves engaging in severe quantities of monkey business."
+Note: There is no necessary combat until Chapter 4: "The Final Battle."
+Part 1
+
+Items required: None. Recommended: High-healing food, a form of poison protection, lock picks for the cell door and a knife for free healing off of pineapple plants.
+
+Note: At any point, you can teleport or flee from Ape Atoll to restock items. All native creatures other than the level 5 Birds of Ape Atoll will be aggressive regardless of your combat level as long as you are in human form. You can hug the southern coast of Ape Atoll, heading west, to avoid the poisonous snakes and spiders. You may encounter only one or two snakes this way, and you can avoid them easily by waiting for them to pass.
+
+Once on the Atoll, start going west, sticking to the southern coastline, until you reach a mahogany tree, at which point you should run north. Aggressive level 24 snakes, level 38 scorpions, and level 42 jungle spiders, all of which are poisonous, will attack if you are within their vicinity. Activate Protect from Missiles as you travel north, as a volley of poisoned arrows will start pelting you as you reach close to the Ape Atoll gate. You will be knocked out and placed into prison.
+
+You awake in a cell guarded by Trefaji and Aberab, the two prison guards. Speak to Lumo, one of the captured 10th Squad members. Stay one square away from the northern cell wall (near the patrolling guards' path) if the guards are in front of it, or else they will punch you for 10-20 damage. The guard will patrol twice throughout the prison, then leave to rotate shifts. As the guard moves away from your cell door, pick lock the door until you succeed. Once out, as the guard is walking out to switch, walk behind him to reach the exit. Note that this may take several tries.
+
+The layout of the jail.
+
+Travel north of the jail, then east to find Karam, a member of the 10th Squad in the bushes near the crafting shop (chisel icon). Karam is mostly translucent and he can be difficult to spot, so look carefully. Travel south, past the large door, keeping in the jungle grass. When you are in the grass, the monkey archers do not fire, but activate Protect from Missiles as a precaution. Once you are past the door, go around the castle counter-clockwise, east, until you are between the white building just south of the castle and the castle. To the east of that building is Garkor, the Sergeant of the 10th Squad.
+
+Garkor's Location is shown in blue.
+
+Speak with Garkor. Make sure to get all the way through the dialogue to the point where he tells you to go meet Zooknock. Go north, then sprint west to the grass with Protect from Missiles on. Continue west behind the buildings in the grass until you reach the doorway to your north.
+
+Blue: Door
+Red: Dentures crate
+Green: Banana crate
+Yellow: Sleeping guard monkey
+
+Enter the door. When inside this house, stay on the dark brown ground or you may be sent back to jail. The spiders inside are aggressive and poisonous, but their poison only hits '1' so it would be wise to save the antipoisons. There are bananas in the southwestern crates next to the ladder. Staying on the dark brown, step east and north, and search the stacked crates towards the middle of the room to acquire monkey dentures. The sleeping guard is a non-threat so long as you don't talk to him, otherwise he will call for guards. Search the south-eastern most crate and where a prompt appears. You will take damage if you drop down into the cavern below, so heal up if necessary before entering. Your Agility level also has a chance to negate this damage. Travel to the north-west part of this cavern, and search the crates to acquire the M'amulet mould
+
+The location of the M'amulet moulds.
+
+If you need to resupply, you can exit the city by going to the south-east corner of the city. Run past the guards and the gravedigger to a ladder. Go up, jump off the bridge, and go back to the boat to Crash Island. You could also teleport out.
+
+Part 2
+
+Items required: Monkey dentures, m'amulet mould, gold bar. Recommended: 1-2 antipoison potions, 4+ energy potions (or other energy-restoring items such as the Explorer's ring), 4+ prayer potions (none will be necessary if flicking the Zombie monkeys), some food, a plank (not actually necessary, but can be obtained during the quest anyway), and an emergency teleport (Ardougne cloak is recommended, or use a dueling ring to go to the Duel Arena, near a bank and glider).
+
+Note: It's recommended to teleport out and bank at this point. The Zombie monkeys pose a significant nuisance as they will hit you while you are running past, they hit somewhat accurately and can deal moderate damage (max of 7). The whole dungeon is a multicombat area. The real threats are the gorilla skeletons; they are densely packed and hit accurately and quite hard (up to 12).
+ Ironmen: If you don't have access to energy potion or prayer potions but have completed Recruitment Drive, you can wear Initiate armour to reduce the Prayer drain while travelling through the cave.
+
+Bank if necessary. Return to the Grand Tree and then to Ape Atoll afterward. Travel to the south of the island, west of Lumdo, and enter the tunnel (). (A plank can be obtained in a run-down shack further west on the island)
+
+Ape Atoll Dungeon
+
+Once within the dungeon, you must travel through a long, winding underground path. It is suggested to activate Protect from Melee as you make your way toward the north passage, flicking it off when not near any enemies to save prayer. The player will occasionally be hit by rocks, indicated by the screen shaking and a rumbling noise. The rocks can be avoided by sheltering under the numerous overhangs (grey areas on the map above), but can be largely ignored. The claw traps near the end of the dungeon can be easily avoided by stopping one square behind them and then running through; the plank is not actually needed, but can also be placed on the flat rock. Level 1 spiders are ubiquitous within this area, along with level 98 monkey zombies and level 142 skeletons. At the end, you will find Zooknock, Waymottin and Bunkwicket; talk to Zooknock then use your m'amulet mould, gold bar, and monkey dentures on him. Make sure you are given an enchanted bar before leaving the tunnel. You MUST talk to Zooknock again! (If the enchanted bar is not given, use the monkey dentures, m'amulet mould, and gold bar on Zooknock.)
+
+Part 3
+
+Items required: Enchanted bar, m'amulet mould, ball of wool. Recommended: 1-2 antipoison potions, lockpick (optional), a teleport (Ardougne cloak or dueling ring recommended), and food. If you are going to do Recipe for Disaster, kill a Monkey Guard for a Gorilla greegree later. (This requires ranged/magic at lower levels as Monkey Guards heal 25 hp when under 20% health in melee range.)
+
+Teleport, and bank if necessary. Return to Ape Atoll afterward, and continue north-west until you are placed in the jail cell again. Escape the cell as before. Travel east towards the temple door. Now, you must descend down through the trapdoor to the east in the temple. Activate Protect from Melee to negate attacks from the powerful monkey guards. Most of the guards can be ran through, but the ones with beards near the trapdoor cannot. The easiest route is to go upstairs, then climb the ladder down on the east side to get close to the trapdoor. If you do not, you should wait until the guards walk away. Hide in the north-east corner of the temple until there is enough room which you are able to descend. Be careful not to get surrounded or cornered by the monkey guards, or else you may be unable to escape (if you happen to get surrounded, go up the stairs and hop worlds) . The ladder near the trap door can only be climbed up from the EAST side. You can also restore prayer points if needed at the monkey altar.
+
+The trapdoor is directly next to the ladder.
+
+Go down the trapdoor, still praying against melee. Ignore the monkey zombies (or kill one and pick up the bones in case you want to do Recipe for Disaster (see below)), and swiftly use the enchanted bar on the wall of flames. Travel back up the ladder or find a safespot to get away from the foes. Teleport away from Ape Atoll if you need to replenish supplies. Use the ball of wool with the amulet. After you have created the m'speak amulet, you can either teleport out to resupply or continue on to the next step. Be careful! You will most likely be trapped again when you ascend the ladder, so be sure to activate Protect from Melee if you haven't already done so. Head to the building west of the jail (make sure you either sneak around in the grass, or use Protect from Missiles to run directly there). To the west of that building, there should be a banana garden that has a Monkey Child in it. The Monkey Child is being patrolled by The Monkey's Aunt. She follows a predetermined path that loops around the wooden house by the garden. Do not enter the banana garden when the monkey's aunt is present or she will call for guards to arrest you (if this happens, you can escape by quickly climbing up the ladder in the building beside). Wait for the aunt to walk away, then speak to the monkey child.
+
+Tip: Using the ladder in the monkey's aunt's house nearby can help you escape the guards if the monkey's aunt catches you, but do not speak to The Monkey's Uncle upstairs or else he will call the guards too.
+
+Tell the monkey child that you are his uncle. After he reveals that he is supposed to collect 20 bananas, search and pick five (5) from the nearby trees. You do not actually need 20; five is enough as the monkey cannot count. Wait for a few moments in the corridor, then return to the monkey child when the aunt is away. Ask the child to borrow his Monkey talisman. The drop trick can be used to get more than one; you will need to drop it and then speak to the monkey child, telling him you have lost the talisman. Then wait or hop worlds as the monkey child will start to cry and will not immediately give you another one. Alternatively, talismans can be purchased from Tutab's Magical Market for 1000 coins. You won't be able to access the shop to obtain the first talisman as you must be in monkey form. Get one talisman for each greegree you want, four are needed for Recipe for Disaster (see the below section). Exit Ape Atoll.
+
+Note: For the Recipe for Disaster quest, you should get a total of four (4) talismans. Talismans can be purchased for 1000gp each at Tutab's Magical Market. You cannot access Tutab's Magical Market unless you are in monkey form. Read below for info regarding the monkey bones you should gather for the quest.
+WARNING : Using teleportation of any sorts that take you out of Ape Atoll while wielding a greegree will forcibly unequip it to your inventory by the destination, if your inventory is full the greegree will be lost and you will have to make a new one.
+
+Recipe for Disaster: You will also need the additional three (3) greegrees (4 total). Each of these requires one talisman for a total of 4 talismans plus their respective monkey bones: You will save yourself 1-2 trips if you get all of these before going to Zooknock at this point. For all of the bones, you must kill one of each of the following: Monkey (monster), Monkey Archer, Monkey Zombie and Monkey Guard. A Monkey Guard can be killed much more easily by safespotting it, they will only heal in melee range. The easiest ones to kill are located upstairs. Go through the front entrance (have Protect from Melee on then turn it off once you get up the ladder) then head for the southern ladder. You will find yourself in a corridor where you can safespot the guard. Once you have all of the required bones and talismans, take all 4 bones and 4 talismans to Zooknock to create them. If he does not take the next bones you give him right after he gives you your greegree, talk to him, and ask him to make another greegree. If this doesn't work, then try the drop trick with your greegree(s).
+
+Part 4
+
+Items required: Materials for making the greegrees you want. For Monkey Madness I, only one monkey talisman and Monkey bones are needed (make sure those are Karamjan monkey's bones; otherwise, you will have to run back again. You can substitute the bones with a Monkey corpse). Recommended: 1-2 antipoison potions, energy potions, prayer potion and food, a plank, Ardougne teleport.
+
+Bank for the necessary items and make sure you have a teleport again. You will be heading back to Zooknock through the tunnel again. Return to Ape Atoll. Travel through the tunnel for a second time, and use (the left-click option for all types of bones is bury) the monkey talisman and the monkey bones (or corpse) on Zooknock. After a brief delay and conversation, you will get a greegree corresponding to the bones you used on him. To make another greegree, you have to first talk to him again and ask him if he can make another. If you cancel the conversation accidentally, ask how to make the monkey talisman and it will resume.
+
+Chapter 3
+
+Items required: Karamjan monkey greegree, m'speak amulet, 1 free inventory space. Recommended: Ardougne teleport.
+
+"In which our hero/heroine finds himself/herself contending with life as a monkey."
+
+Note: You can skip to Step 5 (Retrieving the Monkey in the Ardougne zoo) if you want to bank or resupply. You can do Steps 1 through 4 when you return to Ape Atoll.
+
+Wield the monkey greegree (Karamjan only; the others WILL NOT work) to become a monkey! In this form, you will not be approached or attacked by any of the monkeys or wildlife on the island. Return to Garkor, and speak to him in monkey form. Then, with the m'speak amulet equipped, talk to the Elder Guard near Garkor, and he will tell you to speak with Kruk. Go back to the gate into Marim. Climb up the western hill, then up the bamboo ladder and cross the bamboo bridge. Speak to Kruk and he will take you to King Awowogei. Speak to Awowogei and offer an alliance. He will ask you to rescue a monkey from the Ardougne Zoo. DO NOT TELEPORT WHILE WIELDING THE GREEGREE WITH A FULL INVENTORY, IT WILL BE DROPPED AND POTENTIALLY LOST IF YOU DO. Then travel to Ardougne and enter the zoo. Wield the greegree. Speak to the Monkey minder, who will place you in the cage. Speak with a monkey (the only one with a "Talk" option) to take it into the inventory. Unequip the greegree and speak to the Monkey minder again. He will let you out. Travel by foot to the Gnome Stronghold, and climb up to the 2nd floor[US] and talk to Daero, and travel to Ape Atoll as usual. Any method of teleportation (including random events) will result in the monkey leaving your inventory. Your new monkey friend will supply you with some "humorous" dialogue, and examining him will get you poked. If you have any bananas in your inventory, he will most likely eat them. There is also a 1/256 chance that he will give you a clue scroll (medium) if you use bananas on him directly. Note that you must go through the entire dialogue. Only one clue may be obtained per player. Return to Ape Atoll. Do not forget to equip the greegree. Speak to the king again. (If you have spoken to him before, you can simply speak to the Elder Guard, and he will let you in. If you have not, see Steps 1 through 3.) The monkey will automatically leave your backpack. Awowogei will consider an alliance. Speak to Garkor again to start Chapter 4.
+
+Caranock, Waydar and King Awowogei plotting.
+Chapter 4
+
+Items required: Greegree. Recommended: 1-2 antipoison potions, food and combat equipment to defeat a level 195 Jungle Demon.
+
+"The Final Battle"
+Note: You can teleport to the Jungle Demon fight from anywhere in Runescape, except for the Wilderness, by simply equipping the 10th squad sigil.
+
+Enter the grass near Garkor and speak to Garkor (as a human or monkey). He will give you a 10th squad sigil. Do not equip it until you are ready for the final battle! If you lose your last sigil, you must speak with Garkor again, who will send you to Waymottin at the end of Zooknock's tunnel.
+
+The 10th squad and the player fight the demon.
+
+Note: If you die during the battle, you will respawn with your 3 most valuable items, as well as the greegree and the sigil. If you teleport back into battle immediately, you can recover any other lost items.
+
+Bank in preparation for the Jungle Demon fight. Ensure you have full prayer points and health. The Jungle Demon is best defeated by using a Dwarf multicannon, by ranging/maging, or by luring the demon into the 10th Squad gnomes. To determine your strategy, choose whichever of the three suggested methods would work best for your skill. Bring prayer potions, good food (lobsters or better), and a one-click teleport out just in case. Protect from Magic is crucial, and should ideally be turned on just before you teleport. Bring an antipoison as well for the post-battle sequence.
+
+When you are ready to fight, wear the sigil. You will be teleported to the Jungle Demon's arena shortly thereafter. Defeat the Jungle Demon to advance. The 10th Squad gnomes will be nearby to help you, but you must deal the final blow yourself, or the demon will heal for 25% of his max health.
+
+Strategy for Ranged/Magic: Attacking with Magic or Ranged as well as having 37+ Prayer is recommended. There is a safespot in the arena across a bridge on the outside edge. From there, you can either range him, or lure him into the 10th Squad gnomes, who can weaken him. Once the Jungle Demon is within lethal range, with Protect from Magic still activated, run up to the Jungle Demon and Melee it once and run back. This will prevent the Jungle Demon from using his Melee attack while he continues to hit you with Magic which you protect from. Standing still once you are teleported to the arena will keep distance between you and the Jungle Demon. The demon will not move, and thus will not be able to approach you and use its Melee attack, which will result in you taking no damage throughout the fight as long as you keep your prayer up.
+
+Strategy for Melee: Using rings of recoil will help, especially when he hits hard. When the Jungle Demon reaches 1 HP from the gnomes, there will be a period of a few seconds before it regenerates its health. You can use Melee with this method.
+
+Finishing up
+
+Once the Jungle Demon is slain, speak to Garkor, who is indicated by an arrow. He will tell you to speak to Zooknock to be teleported out. Speak to Zooknock to be teleported to Ape Atoll. If players decline the offer and stay, they are free to explore the banana plantation. However, Zooknock leaves, meaning that the other gnomes are the player's teleport out. In the base of the statue is a crack, which players can enter and speak to Bonzara. He offers to teleport the player out of the arena at the end of the conversation.
+
+Warning: Both teleporters will put you in the jungle on Ape Atoll near poisonous and aggressive monsters, so be sure to have anti-poison! Equip your Greegree immediately after you are teleported out.
+
+Escape the island however you like, either through the main gates as a monkey, with any form of teleport, or by jumping off the bridge in the south-east part of the city. Go back to Gnome Stronghold.
+
+Advice for 1-Defence pures: Before returning to King Narnode, it is recommended that you chop a teak tree and fish for raw bass for the medium Western Provinces Diary.
+Warning for 1-Defence pures: Talking to King Narnode and completing the quest will result in you no longer being able to return to Ape Atoll without claiming the experience, which will raise your Defence to at least 33. Do not finish the quest before training on skeletons with chinchompas if you intend to make use of the training location in the future. As a pure, you can kill the Jungle Demon and still return to Ape Atoll after its death, but if you talk to King Narnode, you will be unable to return without getting the Defence experience.
+
+Speak with King Narnode in the Grand Tree to finish the quest.
+
+Congratulations! Quest complete!
+
+Narnode will then redirect you to Daero for your training as a new 10th squad member, so go have a chat with Daero for the experience rewards.
+
