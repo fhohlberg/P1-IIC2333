@@ -29,7 +29,7 @@ int main(int argc, char *argv[]){
   cr_ls(4);
   //printf("%d\n", cr_exists(1, "Baroque.mp3"));*/
   
-  crFILE * file = cr_open(1, "guides.txt", 'r');
+  //crFILE * file = cr_open(1, "guides.txt", 'r');
 
   void* buffer = malloc(18);
   buffer = "HOLA LUCRE Y FRAN";
@@ -37,9 +37,12 @@ int main(int argc, char *argv[]){
   //buff = (unsigned char*)buffer;
   //printf("BUFFERR: %s\n", buffer);
 
-  cr_read(file,0,23708);
-  //cr_write(file, buffer, 18);
-  //cr_read(file,0,23708 + 18);
+  //cr_read(file,0,23708);
+  crFILE * file = cr_open(2, "text.txt", 'r');
+  //cr_read(file,0, 23800);
+  cr_write(file, buffer, 18);
+  //printf("\nENTREMEDIO\n");
+  cr_read(file,0, 23800);
 
 
 
