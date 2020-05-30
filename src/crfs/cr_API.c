@@ -102,7 +102,6 @@ Bloque* bloque_init(int i, int tipo_bloque, unsigned char *bytes_malloc){
   return bloque;
 }
 
-
 Disco* disco_init(char *filename){
 
   Disco* disco = malloc(sizeof(disco));
@@ -1115,3 +1114,101 @@ int cr_write(crFILE* file, void* buffer, int nbytes){
 }
 
 //int cr_unload(unsigned disk, char* orig, char* dest){}
+
+int cr_rm(unsigned disk, char* filename){
+  int bloque_directorio = (disk-1)*65536;
+  int inicio = 3;
+  int final = 32;
+  char nombre_archivo[29];
+  for (int i = 0; i < 256; i++ ){ //256 secuencias de 32 bytes
+    for (int j = inicio; j < final; j++){
+      nombre_archivo[j - inicio] = (char) disco -> array_bloques[bloque_directorio] -> array_bytes[j];
+    }
+    if (strcmp(nombre_archivo, filename) == 0){
+      int bloque_indice_bits[23];
+      for (int k = 0; k < 23; k++){
+        bloque_indice_bits[k] = disco -> array_bloques[bloque_directorio] -> array_bits[k+1];
+      }
+      int bloque_indice = bits_to_int(bloque_indice_bits, 23);
+      disco -> array_bloques[bloque_directorio + 1] -> array_bits[bloque_indice] = 0;
+      // Aca hay un problema porque solo actualizamos array_bits, el validez, y no el array de bytes tambien.
+      disco -> array_bloques[bloque_directorio] -> array_bits[(inicio-3)*8] = 0;
+
+
+      int referencias_bits[32];
+      for (int w = 0; w < 32; w++){
+        referencias_bits[w] = disco -> array_bloques[bloque_indice] -> array_bits[w];
+      }
+
+      int referencias = bits_to_int(referencias_bits, 32); // Asumimos que un archivo siempre tiene referencia mayor igual a uno, aunque no tenga hardlink adicional
+      referencias --;
+
+      // Actualizar struct dic con nueva referencias
+      /*
+      int nueva_referencias_bit = (int) int_to_bits(referencias, 4); // Duda en ese 3
+      for (int w = 0; w < 32; w++){
+        disco -> array_bloques[bloque_indice] -> array_bits[w] = nueva_referencias_bit[w];
+      }
+      */
+
+      //debemnos actualizar el disco bin tmb?
+
+
+      if (referencias == 0){
+        int tamano_bits[64]; //Asumimos que esta en Bytes
+        for (int z = 0; z < 64; z++){
+          tamano_bits[z] = disco -> array_bloques[bloque_indice]-> array_bytes[16 + z];
+        }
+        int tamano = bits_to_int(tamano_bits, 64);
+        int puntero_bits[32];
+        for (int i = 12*8; i < (tamano + 12)*8; i = i + 32){
+          for (int j= 0; j < 32; j++){
+            puntero_bits[j] = disco -> array_bloques[bloque_indice] -> array_bits[i + j];
+          }
+          int puntero = bits_to_int(puntero_bits, 32);
+          disco -> array_bloques[bloque_directorio + 1] -> array_bits[puntero] = 0; //bit de validez
+          // free(disco -> array_bloques[puntero] -> array_bits);
+          // free(disco -> array_bloques[puntero] -> array_bytes);
+
+          if (tamano > 2045 * 8 * 1024){
+            int puntero_indirecto_bits[32];
+            for (int x = 0; x < 32; x++){
+              puntero_indirecto_bits[x] = disco -> array_bloques[bloque_indice]-> array_bits[6536-32 + x];
+            }
+            int puntero_indirecto = bits_to_int(puntero_indirecto_bits, 32);
+            disco -> array_bloques[bloque_directorio + 1] -> array_bits[puntero_indirecto] = 0;
+
+            int tamano2 = tamano - 2045 * 8 * 1024;
+
+            for (int y = 0; y < tamano2; y += 32){
+              int nuevo_bloque_bit[32];
+              for (int t = 0; t < 32; t ++){
+                nuevo_bloque_bit[t] = disco -> array_bloques[puntero_indirecto] -> array_bits[y + t];
+              }
+              int nuevo_bloque = bits_to_int(nuevo_bloque_bit, 32);
+              disco -> array_bloques[bloque_directorio + 1] -> array_bits[nuevo_bloque] = 0;
+            }
+          }
+        }
+      }
+    }
+    inicio += 32;
+    final += 32;
+  }
+  return 0;
+  // En esta funcion cuando cambiamos el bir de validez, y los bitmaps, solo cambiamos el array de bits, y no de bytes. Disminuir en 1 el bit de mas a la izquierda es lo mismo que disminuir en 2 elevado a 7 el byte??
+
+  //Falta:
+  // Cambiar array de bytes cuando cambiamos el bitmap y validez
+  // cambiar la referencia
+
+}
+
+int cr_close(crFile* file_desc){
+  if (file_desc -> tamaño < 2045*1024*8){ //2045 * 1024 * 8 es la capacidad maxima de un archivo sin utilizar su puntero indirecto
+    for (int i = 0; i < file_desc -> tamaño; i++) {
+
+    }
+
+  }
+}
