@@ -26,13 +26,30 @@ int main(int argc, char *argv[]){
   printf("Directorio disco 3\n");
   cr_ls(3);
   printf("Directorio disco 4\n");
-  cr_ls(4);*/
-  //printf("%d\n", cr_exists(1, "Baroque.mp3"));
-  //cr_open(2, "hola.txt", 'w');
-  //cr_open(3, "hola.txt", 'w');
-  //cr_open(4, "hola.txt", 'w');
-  crFILE * file = cr_open(1, "Baroque.mp3", 'r');
-  cr_read(file, 0, 24000);
+  cr_ls(4);
+  //printf("%d\n", cr_exists(1, "Baroque.mp3"));*/
+  
+  crFILE * file = cr_open(1, "guides.txt", 'r');
+
+  void* buffer = malloc(18);
+  buffer = "HOLA LUCRE Y FRAN";
+  //unsigned char buff;
+  //buff = (unsigned char*)buffer;
+  //printf("BUFFERR: %s\n", buffer);
+
+  cr_read(file,0,23708);
+  //cr_write(file, buffer, 18);
+  //cr_read(file,0,23708 + 18);
+
+
+
+  //crFILE * file = cr_open(2, "yes.mp3", 'r');
+  //cr_read(file, 0, 24484977);
+  //crFILE * file = cr_open(1, "guides.txt", 'r');
+  //cr_read(file, 0, 1000);
+  //crFILE * file2 = cr_open(2, "text.txt", 'r');
+  //cr_read(file2, 0, 1000);
+
   //cr_open(3, "hola.txt", 'w');
   //cr_open(4, "hola.txt", 'w');
 
