@@ -13,19 +13,33 @@ typedef struct bloque
 }Bloque;
 
 
-
 typedef struct disco
 {
     Bloque **array_bloques;
+    
 }Disco;
 
 
 typedef struct crFILE
 {
-  char *nombre_archivo;
+  char *nombre;
+  int tamano; //tamano en Bytes
+  int hardlinks;//cantidad de hardlinks
+  unsigned char* data; //contenido del file
+  int pos_lect; //posicion de lectura del archivo
+  int pos_esc;
+  int bloque_indice; //
+  int disk;
 }crFILE;
 
 void cr_mount(char *diskname);
 Disco* disco_init(char *filename);
-Bloque* bloque_init(int i, int tipo_bloque, unsigned char *array_bytes, int particion);
+void cargar_bloque(Disco* disco, int bloque);
+Bloque* bloque_init(int i, int tipo_bloque, unsigned char *array_bytes);
 void cr_bitmap(unsigned disk, bool hex);
+int cr_exists(unsigned disk, char* filename);
+void cr_ls(unsigned disk);
+crFILE* cr_open(unsigned disk, char* filename, char mode);
+int cr_read(crFILE* file_desc, void* buffer, int nbytes);
+void print_file(crFILE* file);
+int cr_write(crFILE* file, void* buffer, int nbytes);
