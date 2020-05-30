@@ -4,6 +4,8 @@
 #include "cr_API.h"
 #include <math.h>
 #include <stdbool.h>
+#include "../imagelib/imagelib.h"
+
 
 // Variables Globales //
   char path_disk[255];
@@ -931,6 +933,8 @@ int cr_unload(unsigned disk, char* orig, char* dest){
     printf("ENTRE A UNLOAD\n");
     crFILE* up_file = cr_open(disk, orig, 'r');
     cr_read_unload(up_file, dest, up_file -> tamano);
+    Image * img = img_png_read_from_file(dest);
+    img_png_write_to_file(img, "heapsort2.png");
 
 
   }
