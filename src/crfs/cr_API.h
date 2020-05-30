@@ -16,7 +16,7 @@ typedef struct bloque
 typedef struct disco
 {
     Bloque **array_bloques;
-    
+
 }Disco;
 
 
@@ -43,3 +43,4 @@ crFILE* cr_open(unsigned disk, char* filename, char mode);
 int cr_read(crFILE* file_desc, void* buffer, int nbytes);
 void print_file(crFILE* file);
 int cr_write(crFILE* file, void* buffer, int nbytes);
+//int cr_unload(unsigned disk, char* orig, char* dest);
