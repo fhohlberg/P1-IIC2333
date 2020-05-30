@@ -10,6 +10,7 @@ typedef struct bloque
   unsigned char *array_bytes;
   int *array_bits;
   int particion; //1, 2, 3, 4
+
 }Bloque;
 
 
@@ -43,4 +44,8 @@ crFILE* cr_open(unsigned disk, char* filename, char mode);
 int cr_read(crFILE* file_desc, void* buffer, int nbytes);
 void print_file(crFILE* file);
 int cr_write(crFILE* file, void* buffer, int nbytes);
+void cr_rm(unsigned disk, char* filename);
 //int cr_unload(unsigned disk, char* orig, char* dest);
+void respaldar(int numero_bloque);
+void cr_close_bloque(int i);
+int cr_close(crFILE* file_desc);
