@@ -1151,8 +1151,7 @@ void cargar_bloque(Disco* disco, int bloque){
 int cr_read_unload(crFILE* file, char* dest, int nbytes){
 
   FILE *destino;
-  destino = fopen(dest ,"wb");
-  printf("ENTRE A READ\n");
+  destino = fopen(dest ,"wb+");
 
   int bytes_restantes = file -> tamano - file -> pos_lect;
   int inicio_lectura = file ->  pos_lect;
@@ -1168,7 +1167,7 @@ int cr_read_unload(crFILE* file, char* dest, int nbytes){
     bytes_restantes = nbytes;
   }
 
-  
+
   if(file -> tamano != 0){
     //file -> data = malloc(sizeof(unsigned char)* (file -> tamano));
 
@@ -1199,7 +1198,6 @@ int cr_read_unload(crFILE* file, char* dest, int nbytes){
           }
           //fprintf(stderr, "\nLeyendo en el bloque de datos %d\n", bloque_dato);
           for(int k = 0; k < (int) pow(2,13); k++){
-            if(disco -> array_bloques[bloque_dato] -> array_bytes[k] != 0){
               //fprintf(stderr, "%u ",disco -> array_bloques[bloque_dato] -> array_bytes[k]);
               fwrite(&disco -> array_bloques[bloque_dato] -> array_bytes[k], sizeof(unsigned char), 1 , destino);
               //buff[contador] = disco -> array_bloques[bloque_dato] -> array_bytes[k];
@@ -1210,7 +1208,6 @@ int cr_read_unload(crFILE* file, char* dest, int nbytes){
                 break;
               }
               //printf("contador: %d\n", contador);
-            }
           }
         }
         inicio += 32;
@@ -1246,7 +1243,6 @@ int cr_read_unload(crFILE* file, char* dest, int nbytes){
             }
             bloque_dato1 = bits_to_int(bits_puntero_dato1, 32);
             for(int k = 0; k < (int) pow(2,13); k++){
-              if(disco -> array_bloques[bloque_dato1] -> array_bytes[k] != 0){
                 fwrite(&disco -> array_bloques[bloque_dato1] -> array_bytes[k], sizeof(unsigned char), 1 , destino);
 
                 contador++;
@@ -1254,7 +1250,7 @@ int cr_read_unload(crFILE* file, char* dest, int nbytes){
                   parar2 = 1;
                   break;
                 }
-              }
+
             }
           }
           inicio1 += 32;
@@ -1264,6 +1260,3 @@ int cr_read_unload(crFILE* file, char* dest, int nbytes){
   }
   return 1;
 }
-
-
-

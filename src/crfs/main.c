@@ -5,6 +5,7 @@
 #include "cr_API.h"
 
 
+
 int main(int argc, char *argv[]){
   char* diskname = argv[1];
   cr_mount(diskname);
@@ -28,7 +29,7 @@ int main(int argc, char *argv[]){
   printf("Directorio disco 4\n");
   cr_ls(4);
   //printf("%d\n", cr_exists(1, "Baroque.mp3"));*/
-  
+
   //crFILE * file = cr_open(1, "guides.txt", 'r');
 
   void* buffer = malloc(18);
@@ -44,9 +45,9 @@ int main(int argc, char *argv[]){
   //printf("\nENTREMEDIO\n");
   //cr_read(file,0, 23800);
 
-  cr_unload(1, "heapsort.png", "/Users/francisca/Documents/ING 9 SEMESTRE/Sistemas Operativos y Redes/P1-IIC2333/heapsort.png");
-
-
+  //cr_unload(1, "heapsort.png", "/Users/Sguazzotti/Desktop/heapso2rt.png");
+  cr_unload(1, "guides.txt", "/Users/Sguazzotti/Desktop/guides10.txt");
+  //cr_unload(1, "Baroque.mp3", "/Users/Sguazzotti/Desktop/Baroque3.mp3");
 
 
   //crFILE * file = cr_open(2, "yes.mp3", 'r');
