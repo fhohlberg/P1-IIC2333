@@ -46,7 +46,7 @@ int main(int argc, char *argv[]){
   //cr_read(file,0, 23800);
 
   //cr_unload(1, "heapsort.png", "/Users/Sguazzotti/Desktop/heapso2rt.png");
-  cr_unload(1, "guides.txt", "/Users/Sguazzotti/Desktop/guides10.txt");
+  cr_unload(2, "yes.mp3", "/Users/Sguazzotti/Desktop/yes.mp3");
   //cr_unload(1, "Baroque.mp3", "/Users/Sguazzotti/Desktop/Baroque3.mp3");
 
 

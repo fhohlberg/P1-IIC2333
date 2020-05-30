@@ -931,8 +931,6 @@ int cr_unload(unsigned disk, char* orig, char* dest){
     printf("ENTRE A UNLOAD\n");
     crFILE* up_file = cr_open(disk, orig, 'r');
     cr_read_unload(up_file, dest, up_file -> tamano);
-
-
   }
   else{
     fprintf(stderr,"\nNo existe el archivo %s en la partición %d.\n", orig, disk);
