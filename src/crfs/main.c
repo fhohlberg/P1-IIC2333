@@ -63,7 +63,7 @@ int main(int argc, char *argv[]){
   cr_load(1, "gui2.txt");
   crFILE * file = cr_open(1, "gui2.txt", 'r');
   //file -> tamano = 23000;
-  cr_read(file,0, 23800);
+  //cr_read(file,0, 23800);
 
   //cr_unload(1, "text.txt", "file_disco/text.txt");
   //crFILE * file2 = cr_open(2, "text.txt", 'r');

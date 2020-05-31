@@ -436,11 +436,11 @@ crFILE* cr_open(unsigned disk, char* filename, char mode){
         }
         int bloque_indice = bits_to_int(bits_puntero, 23);
         unsigned char aux_particion = filename[0];
-        char aux_filename[strlen(filename)-2];
+        char aux_filename[255];
         if (bloque_indice == 0){
-          //fprintf(stderr, "str len: %d\n", strlen(filename)-2);
-          strncpy(aux_filename, filename + 2, strlen(filename) - 2);
-          char aux2_filename[strlen(aux_filename)-2];
+          //fprintf(stderr, "str len: %d\n", strlen(filename) -2);
+          strncpy(aux_filename, filename + 2, 255);
+          char aux2_filename[255];
           strcpy(aux2_filename, aux_filename);
           //fprintf(stderr, "FILE NAME: %s\n", aux2_filename);
 
@@ -465,7 +465,7 @@ crFILE* cr_open(unsigned disk, char* filename, char mode){
         int cargado = 0;
         for(int a = 0; a < pos_bloques_cargados; a++){
           if(bloques_cargados[a] == bloque_indice){
-            fprintf(stderr, "ENTREEEE\n");
+            //fprintf(stderr, "ENTREEEE\n");
             cargado = 1;
           }
         }
@@ -731,9 +731,9 @@ int cr_read(crFILE* file, void* buffer, int nbytes){
   }
 
 
-  fprintf(stderr, "\nLeyendo %d Bytes del archivo: %s\n\n", bytes_restantes, file -> nombre);
+  //fprintf(stderr, "\nLeyendo %d Bytes del archivo: %s\n\n", bytes_restantes, file -> nombre);
   for(int i = 0; i < contador; i++){
-    fprintf(stderr, "%c", buff[i]);
+    fprintf(stderr, "%u", buff[i]);
   }
   //fprintf(stderr, "contador: %d\n", contador);
   //print_file(file);
@@ -978,18 +978,21 @@ int cr_write(crFILE* file, void* buffer, int nbytes){
   for(int n = 32; n < 96; n++)
     disco -> array_bloques[file -> bloque_indice] -> array_bits[n] = bits_64_tamano[n - 32];
 
+  /*int bits2_aux[8];
   for(int n = 32; n < 96; n++){
-    int bits2_aux[8];
+    printf("\nBITS: ");
     for(int j = 0; j < 8; j++){
       bits2_aux[j] = disco -> array_bloques[file -> bloque_indice] -> array_bits[n + j];
+      printf("%d", bits2_aux[j]);
     }
+    printf("\n");
     unsigned char byte_tam = (unsigned char)bits_to_int(bits2_aux, 8);
     disco -> array_bloques[file -> bloque_indice] -> array_bytes[n/8] = byte_tam;
     printf("%u ", disco -> array_bloques[file -> bloque_indice] -> array_bytes[n/8]);
     n+=8;
 
   }
-  printf("\n");
+  printf("\n");*/
   return contador;
 }
 
