@@ -23,7 +23,7 @@ typedef struct disco
 typedef struct crFILE
 {
   char *nombre;
-  int tamano; //tamano en Bytes
+  unsigned long long int tamano; //tamano en Bytes
   int hardlinks;//cantidad de hardlinks
   unsigned char* data; //contenido del file
   int pos_lect; //posicion de lectura del archivo
@@ -46,7 +46,7 @@ int cr_unload(unsigned disk, char* orig, char* dest);
 
 int* byte_to_bits(unsigned char byte);
 
-int bits_to_int(int* bits, int n);
+unsigned long long int bits_to_int(int* bits, int n);
 
 unsigned char* int_to_bytes(int n, int cantidad_bytes);
 
@@ -55,4 +55,7 @@ int* int_to_bits(int n, int cantidad_bytes);
 void print_file(crFILE* file);
 
 int cr_read_unload(crFILE* file, char* dest, int nbytes);
+int cr_load(unsigned disk, char* orig);
+unsigned long long binario_largo(unsigned long long n, int* array_bits);
+
 
