@@ -39,7 +39,6 @@ typedef struct crFILE
 
 
 void cr_mount(char *diskname);
-void cargar_bloque(Disco* disco, int bloque);
 void cr_bitmap(unsigned disk, bool hex);
 int cr_exists(unsigned disk, char* filename);
 void cr_ls(unsigned disk);
@@ -57,6 +56,7 @@ int cr_softlink(unsigned disk_orig, unsigned disk_dest, char* orig, char* dest);
 
 Disco* disco_init(char *filename);
 Bloque* bloque_init(int i, int tipo_bloque, unsigned char *array_bytes);
+void cargar_bloque(Disco* disco, int bloque);
 int* byte_to_bits(unsigned char byte);
 unsigned long long int bits_to_int(int* bits, int n);
 unsigned char* int_to_bytes(int n, int cantidad_bytes);

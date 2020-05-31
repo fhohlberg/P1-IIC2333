@@ -1,4 +1,3 @@
-FUNCIONOOOOOOOOO
 Monkey Madness I
 
 Warning: Ape Atoll is one of the most dangerous areas in the game, until you obtain a monkey greegree. When going to Ape Atoll, bring plenty of food, antipoison potions, and an emergency teleport, in addition to other required items. Switching off Auto Retaliate and utilising protection prayers will greatly improve your chances of survival.
@@ -145,3 +144,5 @@ Speak with King Narnode in the Grand Tree to finish the quest.
 Congratulations! Quest complete!
 
 Narnode will then redirect you to Daero for your training as a new 10th squad member, so go have a chat with Daero for the experience rewards.
+
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    

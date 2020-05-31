@@ -1,0 +1,89 @@
+Informe 2: 
+Proyecto Grupal -  IIC2733
+Proceso Subsidios Fomento Productivo - PUENTES UC
+
+El proceso a analizar es la otorgación de cheque de subsidio en la Municipalidad de Puente Alto. Se estudiarán los subprocesos que se llevan a cabo dentro del Área de Fomento Productivo, donde se busca brindar apoyo a comerciantes, microemprendedores y emprendedores dentro de la comuna. 
+
+Se busca ofrecer apoyo a los habitantes que lo necesiten para hacer crecer su negocio y tener estabilidad económica. Por lo tanto,  es relevante asegurarse que los subsidios sean entregados a aquellas personas que estén en condiciones de necesitarlo. Es decir, se debe cumplir con todos los requisitos a mencionar en el proceso de postulación y de solicitud ya que de esta manera, los funcionarios de la municipalidad se aseguran que el subsidio entregado sirva como herramienta financiera para llevar a cabo su negocio, que sean usados para el fin especificado y que mejore la calidad de vida de los residentes.
+
+Para poder otorgar el subsidio se llevan a cabo una serie de pasos, desde la solicitud, la recopilación y verificación de información, hasta el otorgamiento del cheque. Cabe mencionar que se debe contar con los requisitos impuestos para buscar un subsidio, ya que una falta en la documentación u error de identidad puede implicar el rechazo o retraso del subsidio. En la Dirección de Desarrollo Comunitario (DIDECO) se otorgan mensualmente cerca de 50 subsidios por lo tanto, se hace necesario tener un proceso adecuado y claro que los funcionarios puedan seguir de manera óptima. 
+
+Dentro del análisis realizado hasta el momento, destaca lo engorroso que puede llegar a ser el otorgamiento del subsidio, y la falta de claridad de los pasos a seguir en algunas partes del proceso. Por ende, se presenta un espacio de mejora considerable y una oportunidad para reordenar el proceso con el objetivo de facilitar las tareas a quienes formen parte de él, que tengan claro las partes que lo componen y su optimización. 
+Por último, el proceso cuenta con una serie de áreas involucradas para poder brindar el servicio y otorgar el subsidio. Tanto las actividades y los eventos claves dentro del proceso como los principales responsables en cada una de las etapas se explican a continuación. Además, se recopiló la información obtenida en las herramientas RECI, SIPOC y modelos BPMN.
+
+Descripción General de la Organización
+
+Identificación de la organización:
+
+Nombre: Municipalidad de Puente alto.
+Figura 1: Organigrama Municipalidad de Puente Alto.
+
+Dentro de los servicios que se entregan se encuentran cursos de capacitación, trámites municipales, trámites de dirección de obras, centros bibliotecarios, centros educacionales, centros de salud, salas de cuna y jardines infantiles.
+
+La Misión de la Municipalidad es “Contribuir a brindar calidad de vida a la comunidad, integrando a la familia, fomentando la participación ciudadana con buenos servicios públicos y un personal comprometido con la atención”.
+
+La municipalidad cuenta con un presupuesto de 100 millones de pesos apróximadamente. Por lo general se asignan 300 millones. En cuanto al crecimiento,  en los últimos 5 a 10 años se han otorgado entre 500 y 600 subsidios anuales.
+
+    
+Contexto -  Industria a la cual pertenece la organización
+
+La Visión de la municipalidad señala que “Puente Alto crece y logra un desarrollo sustentable, ofreciendo calidad de vida a sus habitantes, integrando servicios, rescatando y potenciando su patrimonio, con infraestructura acorde a las necesidades de sus familias”.
+
+Dentro del organigrama (parte inferior izquierda), se encuentra la dirección de desarrollo comunitario (DIDECO). Esta se encarga de la entrega de distintos servicios a los miembros de la comuna, los cuales se otorgan mediante postulaciones a subsidios sociales que se entregan a la organización. Los servicios son de financiamiento y de asesoramiento.
+
+Con respecto a los aspectos normativos del proceso a analizar se encuentran:
+Estudio de la persona que solicita el subsidio: se debe probar que vive en la comuna y posee nacionalidad chilena o visa definitiva.
+Antecedentes Financieros: la persona debe probar que su sin el subsidio sería incapaz de obtener el recurso que está solicitando ya que no cuenta con el capital suficiente.
+Historial de la persona que solicita el subsidio: no puede presentar mal uso de subsidios o beneficios anteriores, se debe tener actualizada la ficha social de Puente alto.
+
+A continuación se presenta un organigrama de dicha área.
+
+Figura 2: Organigrama Dirección de Desarrollo Comunitario (DIDECO).
+
+Identificación del proceso de negocio a analizar dentro del contexto de la organización
+
+En el presente informe se analizará el proceso de negocio que corresponde a la otorgación de cheque de subsidio. 
+
+El objetivo del proceso es otorgar herramientas financieras a los habitantes de Puente Alto para que puedan llevar a cabo sus negocios, los cuales deben aportar a la comunidad.
+
+La relevancia de este proceso es asegurarse de que los subsidios sean entregados a las personas que realmente lo necesitan y que cumplan con los requerimientos previamente establecidos. Se busca que los subsidios logren aportar a los miembros de la comunidad de Puente Alto, que sean utilizados para el fin que fueron creados y por los miembros que pertenecen a dicha comunidad.
+
+Con respecto al volumen de los procesos, la DIDECO otorga aproximadamente 50 subsidios mensuales, sin embargo, existen meses en que la demanda aumenta considerablemente, como en Marzo y en Diciembre.
+
+
+Motivación para estudiar el proceso de negocio
+
+Motivación para analizar o mejorar
+Una gran motivación para estudiar este proceso es la lentitud del proceso. Este es uno de los problemas que afecta a la comunidad. Por lo tanto, existe la oportunidad de agilizar el proceso lo que sería clave para muchos de los negocios locales y son el sustento de muchas familias.  Lograr que este procedimiento sea más rápido puede ser la diferencia entre un negocio próspero y uno que quiebre. Además, sin duda se enriquecería la relación de la comunidad con la municipalidad. Es importante que esta relación sea lo más transparente y sana posible para que exista una comunicación ágil que incentive a los beneficiarios a participar en este tipo de oportunidades.
+Adicionalmente, el proceso no selecciona beneficiarios a la perfección. Es decir, algunos de los fondos entregados se utilizan incorrectamente. Es importante lograr que dichos fondos sean destinados a quienes correspondan para el bien de la comunidad. Fomentar el emprendimiento entregando este tipo de herramientas sin duda conlleva a un crecimiento de la comuna. Por lo tanto, existe la oportunidad de aplicar nuevas técnicas y tecnologías que aporten a la correcta asignación de recursos. Es importante velar por una buena utilización de fondos porque si no se cumple a cabalidad, se podría usar incorrectamente por la comunidad mediante un aprovechamiento de los fondos. 
+Una última motivación, es la oportunidad que existe de detectar y resolver problemas futuros. Estudiar profundamente el procedimiento que realiza una municipalidad generalmente conlleva a descubrir nuevas dificultades que el proceso enfrenta. Si se atacan y resuelven dichas dificultades con anticipación, se puede evitar problemas futuros que afecten a la efectividad y eficacia del proceso.  Un ejemplo para clarificar la oportunidad son las evaluaciones en terreno que realiza la municipalidad para verificar el cumplimiento de requisitos. En un futuro, cuando el proceso esté más desarrollado, realizar este tipo de chequeos solo presencialmente puede llegar a disminuir la agilidad del proceso. Empezar a aplicar sistemas digitales donde los postulantes puedan ingresar archivos multimedia para corroborar el cunmplimiento de sus requisitos podria solucionar un problema antes de que llegue concretamente.
+
+Beneficios esperados del proyecto
+Como se dijo anteriormente, el presente estudio es motivante porque se generan beneficios para la municipalidad y las familias.
+La comunidad se verá beneficiada con un crecimiento mediante nuevas oportunidades de negocios. Los postulantes, tendrán una mayor claridad de requisitos y al tener una postulación más ágil, recibirán respuestas mas rápidas. Esto afecta directamente a quienes soliciten subsidios ya que reciben mayores incentivos para postular. Esto implica que los más necesitados encuentren una oportunidad más accesible de recibir ayuda económica. Es un círculo vicioso que al beneficiar a los postulantes, la comunidad entera podrá optar a nuevos servicios contribuyendo a un desarrollo sano.
+Por otro lado, la municipalidad en sí será altamente beneficiada. El área de Fomento Productivo optimizará sus tiempos y tareas. Al clarificar el proceso, se reducirán la cantidad de rechazos de subsidios en las áreas de control, que puede llegar a ser un cuello de botella en todo el proceso. Sin lugar a dudas tendrán un mayor flujo de entrega de cheques por dia. Es decir, cumplirán sus metas en menos tiempo, permitiendo reducir y aliviar las largas jornadas de trabajo.
+Mejorar cualquier tipo de procedimiento dentro de las áreas a estudiar enriquecerán la relación que existe entre la comunidad y la municipalidad. Siempre es muy importante que exista un enlace sano y productivo entre las familias y la institución que los representa. Esto contribuye a cualquier tipo de proceso entre ambos, llegando a ser uno de los beneficios más importantes dentro del proyecto.
+
+Estado actual del proceso de negocio
+
+Descripción del proceso
+
+Proceso de otorgación de cheque de subsidio:
+
+En primer lugar, el individuo se dirige presencialmente a la oficina para realizar la solicitud. Los motivos de llegada de cada usuario puede ser de manera espontáneamente o enviado desde la gobernación, consultorio u otras redes sociales. Los subsidios pueden ser para la compra de maquinarias, insumos o herramientas. 
+
+Luego de que el cliente entrega su solicitud, la DIDECO: Departamento de Fomento Productivo, la revisa y comprueba que efectivamente el usuario cuenta con los requisitos necesarios. Esto se hace mediante evaluación en terreno, solicitud de historial de deudas del usuario, documentación de pago de dividendos y deudas bancarias. Todo esto, con el fin de comprobar que el usuario efectivamente se encuentra en una situación de vulnerabilidad. 
+
+De ser así, se hace una declaración de gasto e ingreso, la cual debe ser firmada por el usuario y el asistente social. Con la documentación entregada por el usuario (ver Anexo 1), se emite un informe social con toda esta información (ver Anexo 2). Dentro de la opinión profesional se solicita la emisión de un cheque por un monto determinado. 
+
+Este documento es firmado por el asistente social que tenga responsabilidad administrativa del departamento de fomento productivo y junto con esto, se le asigna un número de informe social dicho documento de manera automática.  Se procede a hacer la visita al domicilio del postulante para evaluar su situación (ver Anexo 3).
+
+Posteriormente, es enviado a la encargada de subsidios, quién va creando una planilla anual con los subsidios solicitados y luego los envía a la secretaria de la directora. Ella también los ingresa en otra planilla para ser enviados al Departamento de Unidad de Soporte del Equipo  de Presupuesto. Ambas planillas se manejan con Excel.
+
+Luego, se hacen una serie de revisiones en departamentos externos que chequean que los montos sean correctos, que los documentos sean fidedignos, entre otras cosas. En esta etapa también se van recolectando numerosas firmas que permiten que el proceso siga adelante. 
+
+Por último, el informe se envía a Tesorería Municipal para realizar cheque, el cual se envía a la oficina de Convenio donde se informa al usuario que su cheque está listo para ser retirado.
+
+El proceso en total toma en promedio 20 días hábiles en realizarse. Todo el proceso de seguimiento de la otorgación del cheque se realiza mediante 
+
+Bibliografía: Municipalidad de Puente Alto. (2018). Misión y Visión. abril 10, 2020, de Municipalidad de Puente Alto Sitio web: https://www.mpuentealto.cl/?page_id=                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       
