@@ -60,10 +60,20 @@ int main(int argc, char *argv[]){
   //cr_read(file, 0, 100);
   //cr_read(file, 0, 100);
 
-  cr_load(1, "gui2.txt");
-  crFILE * file = cr_open(1, "gui2.txt", 'r');
+  //cr_load(1, "gui2.txt");
+  //crFILE * file = cr_open(1, "gui2.txt", 'r');
   //file -> tamano = 23000;
   //cr_read(file,0, 23800);
+
+  //cr_hardlink(1, "guides.txt", "guides2.txt");
+  //crFILE * file2 = cr_open(1, "guides2.txt", 'r');
+  //cr_hardlink(1, "guides.txt", "guides3.txt");
+  //crFILE * file3 = cr_open(1, "guides3.txt", 'r');
+  //crFILE * file4 = cr_open(1, "guides.txt", 'r');
+
+  cr_softlink(1, 4, "guides.txt",  "guides.txt");
+  crFILE* file = cr_open(4, "1/guides.txt", 'r');
+  cr_read(file,0,100);
 
   //cr_unload(1, "text.txt", "file_disco/text.txt");
   //crFILE * file2 = cr_open(2, "text.txt", 'r');
