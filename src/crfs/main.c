@@ -39,15 +39,18 @@ int main(int argc, char *argv[]){
   //printf("BUFFERR: %s\n", buffer);
 
   //cr_read(file,0,23708);
-  //crFILE * file = cr_open(2, "text.txt", 'r');
+  //crFILE * file = cr_open(4, "1/Baroque.mp3", 'r');
   //cr_read(file,0, 23800);
   //cr_write(file, buffer, 18);
   //printf("\nENTREMEDIO\n");
   //cr_read(file,0, 23800);
-
-  //cr_unload(1, "heapsort.png", "/Users/Sguazzotti/Desktop/heapso2rt.png");
-  cr_unload(2, "yes.mp3", "/Users/Sguazzotti/Desktop/yes.mp3");
+  //cr_ls(4);
+  cr_unload(0, "p", "/Users/Sguazzotti/Desktop/p1_prueba");
+  //cr_unload(2, "yes.mp3", "/Users/Sguazzotti/Desktop/yes.mp3");
   //cr_unload(1, "Baroque.mp3", "/Users/Sguazzotti/Desktop/Baroque3.mp3");
+  //cr_bitmap(4, false);
+  //cr_unload(0, "particion", "/Users/Sguazzotti/Desktop/p1_prueba");
+
 
 
   //crFILE * file = cr_open(2, "yes.mp3", 'r');

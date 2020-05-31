@@ -422,7 +422,7 @@ crFILE* cr_open(unsigned disk, char* filename, char mode){
           }
         }
       }
-      //fprintf(stderr, "\n");
+    //  fprintf(stderr, "bits validacion %d\n",bits_entrada[0]);
       if (bits_entrada[0] == 1){
         crFILE* file = malloc(sizeof(crFILE));
         file -> pos_lect = 0;
@@ -430,11 +430,27 @@ crFILE* cr_open(unsigned disk, char* filename, char mode){
         int bits_puntero[23];
         for(int i = 0; i < 23; i ++){
           bits_puntero[i] = bits_entrada[i + 1];
-          //fprintf(stderr, "%d", bits_puntero[i]);
+          //fprintf(stderr, "%d", bits_psuntero[i]);
         }
         int bloque_indice = bits_to_int(bits_puntero, 23);
-        //fprintf(stderr, "bloque indice: %d\n", bloque_indice);
+        unsigned char aux_particion = filename[0];
+        char aux_filename[strlen(filename)-2];
+        if (bloque_indice == 0){
+          fprintf(stderr, "str len: %d\n", strlen(filename)-2);
+          strncpy(aux_filename, filename +2, strlen(filename)-2);
+          fprintf(stderr, "FILE NAME: %s\n", aux_filename);
+          fprintf(stderr, "particion: %c\n", aux_particion);
+          char aux2[255];
+          sprintf(aux2, "%4s", aux_filename);
+          //*((unsigned short*)&str[strIndex]) = (unsigned short)(inStr[index]);
 
+          if (aux_particion == '1'){
+            FILE *file = cr_open(1, aux_filename,mode);
+            return file;
+          }
+        }
+
+        fprintf(stderr, "bloque indice: %d\n", bloque_indice);
         cargar_bloque(disco, bloque_indice);
 
         int referencias;
@@ -472,7 +488,7 @@ crFILE* cr_open(unsigned disk, char* filename, char mode){
       }
     }
     else{
-      fprintf(stderr, "El archivo %s no estiste.\n", filename);
+      fprintf(stderr, "El archivo %s no existe.\n", filename);
     }
   }
   else if (mode == 'w'){
@@ -919,14 +935,50 @@ int cr_write(crFILE* file, void* buffer, int nbytes){
 
 
 int cr_unload(unsigned disk, char* orig, char* dest){
-  if(strcmp(orig, "particion") == 0){
-    //HACER
-    printf("");
+  int pos_dir = -1;
+  char buff[255];
+  if(disk == 1)
+    pos_dir = 0;
+  else if(disk == 2)
+    pos_dir = 65536;
+  else if(disk == 3)
+    pos_dir = 131072;
+  else
+    pos_dir = 196608;
+
+  if(pos_dir == -1 && (disk != 0)){
+    fprintf(stderr,"\nNo existe la partición %d.\n",  disk);
+    return 0;
   }
+
   else if(disk ==  0){
-    //leer el disco completo
-    printf("");
+    for(int i = 1 ; i < 3; i++){
+      sprintf(buff, "%s/%d", dest, i);
+      cr_unload(i, "particion", buff);
+    }}
+
+  else if(strcmp(orig, "particion") == 0 && (pos_dir != -1)&& (disk != 0)){
+    char file_disco[29];
+    int inicio = 3;
+    int final = 32;
+    for(int i = 0; i < 256; i++){
+      int distinta = 0;
+      for(int j = inicio; j < final;j++){
+        file_disco[j-inicio] = (char) disco -> array_bloques[pos_dir] -> array_bytes[j];
+        if ((int)file_disco[j-inicio] != 0)
+           distinta = 1;
+      }
+      if (distinta == 1){
+        sprintf(buff, "%s/%s", dest, file_disco);
+        fprintf(stderr,"\nBUFF %s\n",  buff);
+        crFILE* up_file = cr_open(disk, file_disco, 'r');
+        cr_read_unload(up_file, buff, up_file -> tamano);
+      }
+      inicio += 32;
+      final += 32;
+    }
   }
+    //leer el disco completo
   else if(cr_exists(disk, orig)){
     printf("ENTRE A UNLOAD\n");
     crFILE* up_file = cr_open(disk, orig, 'r');
@@ -1153,6 +1205,7 @@ int cr_read_unload(crFILE* file, char* dest, int nbytes){
 
   int bytes_restantes = file -> tamano - file -> pos_lect;
   int inicio_lectura = file ->  pos_lect;
+  int inicio_lectura_auz = file ->  pos_lect;
   int bloque_actual = (int) (inicio_lectura / (int) pow(2,13));
   int byte_actual = inicio_lectura - (bloque_actual*(int) pow(2,13));
 
@@ -1256,5 +1309,6 @@ int cr_read_unload(crFILE* file, char* dest, int nbytes){
       }
     }
   }
+  file -> pos_lect = inicio_lectura_auz;
   return 1;
 }
