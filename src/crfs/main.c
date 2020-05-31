@@ -5,6 +5,7 @@
 #include "cr_API.h"
 
 
+
 int main(int argc, char *argv[]){
   char* diskname = argv[1];
   cr_mount(diskname);
@@ -28,28 +29,53 @@ int main(int argc, char *argv[]){
   printf("Directorio disco 4\n");
   cr_ls(4);
   //printf("%d\n", cr_exists(1, "Baroque.mp3"));*/
-  
+
   //crFILE * file = cr_open(1, "guides.txt", 'r');
 
   void* buffer = malloc(18);
-  buffer = "HOLA LUCRE Y FRAN";
+  buffer = " HOLA LUCRE Y FRAN";
   //unsigned char buff;
   //buff = (unsigned char*)buffer;
   //printf("BUFFERR: %s\n", buffer);
 
   //cr_read(file,0,23708);
-  crFILE * file = cr_open(2, "text.txt", 'r');
+  //crFILE * file = cr_open(4, "1/Baroque.mp3", 'r');
   //cr_read(file,0, 23800);
-  cr_write(file, buffer, 18);
+  //cr_write(file, buffer, 18);
   //printf("\nENTREMEDIO\n");
-  cr_read(file,0, 23800);
+  //cr_read(file,0, 23800);
+  //cr_ls(4);
+  //cr_unload(4, "1/Baroque.mp3", "file_disco/4/Baroque.mp3");
+  //cr_unload(2, "yes.mp3", "/Users/Sguazzotti/Desktop/yes.mp3");
+  //cr_unload(1, "Baroque.mp3", "/Users/Sguazzotti/Desktop/Baroque3.mp3");
+  //cr_bitmap(4, false);
+  //cr_unload(0, "particion", "/Users/Sguazzotti/Desktop/p1_prueba");
 
 
 
   //crFILE * file = cr_open(2, "yes.mp3", 'r');
   //cr_read(file, 0, 24484977);
-  //crFILE * file = cr_open(1, "guides.txt", 'r');
-  //cr_read(file, 0, 1000);
+  //crFILE * file = cr_open(1, "text.txt", 'r');
+  //cr_write(file, buffer, 19);
+  //cr_read(file, 0, 100);
+  //cr_read(file, 0, 100);
+
+  //cr_load(1, "gui2.txt");
+  //crFILE * file = cr_open(1, "gui2.txt", 'r');
+  //file -> tamano = 23000;
+  //cr_read(file,0, 23800);
+
+  //cr_hardlink(1, "guides.txt", "guides2.txt");
+  //crFILE * file2 = cr_open(1, "guides2.txt", 'r');
+  //cr_hardlink(1, "guides.txt", "guides3.txt");
+  //crFILE * file3 = cr_open(1, "guides3.txt", 'r');
+  //crFILE * file4 = cr_open(1, "guides.txt", 'r');
+
+  cr_softlink(1, 4, "guides.txt",  "guides.txt");
+  crFILE* file = cr_open(4, "1/guides.txt", 'r');
+  cr_read(file,0,100);
+
+  //cr_unload(1, "text.txt", "file_disco/text.txt");
   //crFILE * file2 = cr_open(2, "text.txt", 'r');
   //cr_read(file2, 0, 1000);
 
