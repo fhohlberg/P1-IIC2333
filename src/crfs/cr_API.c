@@ -389,6 +389,7 @@ crFILE* cr_open(unsigned disk, char* filename, char mode){
             //fprintf(stderr, "%d", bits_entrada[8*(j - inicio_puntero) + k]);
           }
         }
+        free(bits_aux);
       }
       else if(disk == 3){
         char file_disco[29];
@@ -418,6 +419,7 @@ crFILE* cr_open(unsigned disk, char* filename, char mode){
             bits_entrada[8*(j - inicio_puntero) + k] = bits_aux[k];
             //fprintf(stderr, "%d", bits_entrada[8*(j - inicio_puntero) + k]);
           }
+          free(bits_aux);
         }
       }
       else if(disk == 4){
@@ -449,6 +451,7 @@ crFILE* cr_open(unsigned disk, char* filename, char mode){
             //fprintf(stderr, "%d", bits_entrada[8*(j - inicio_puntero) + k]);
           }
         }
+        free(bits_aux);
       }
     //  fprintf(stderr, "bits validacion %d\n",bits_entrada[0]);
       if (bits_entrada[0] == 1){
@@ -631,6 +634,7 @@ crFILE* cr_open(unsigned disk, char* filename, char mode){
               cont++;
             }
           }
+          free(bits_nombre_aux);
           int cont2 = 0;
           //printf("inicio: %d, final: %d\n", inicio, final);
           for(int i = inicio; i < final; i++){
@@ -1885,9 +1889,13 @@ void cr_dismount(char *diskname){
         pos_dir = 131072;
       else
         pos_dir = 196608;
-
+      free(disco -> array_bloques[pos_dir] -> array_bits);
+      free(disco -> array_bloques[pos_dir]->array_bytes);
       free(disco -> array_bloques[pos_dir]);
+      free(disco -> array_bloques[pos_dir + 1] -> array_bits);
+      free(disco -> array_bloques[pos_dir + 1]->array_bytes);
       free(disco -> array_bloques[pos_dir + 1]);
+
   }
   free(disco -> array_bloques);
   free(disco);
