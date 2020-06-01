@@ -608,10 +608,13 @@ crFILE* cr_open(unsigned disk, char* filename, char mode){
             }
           }
           if(bloque_indice_libre != -1){
+            printf("\nBloque indice asignado: %d\n", bloque_indice_libre);
             bits_bloque_indice = int_to_bits(bloque_indice_libre, 3);
-            for(int i = 0; i < 24; i++){
-              bits_bloque_indice[0] = 1;
-            }
+            //for(int i = 0; i < 24; i++){
+              //fprintf(stderr, "%d", bits_bloque_indice[i]);
+            //}
+            //printf("\n");
+            bits_bloque_indice[0] = 1;
           }
           else{
             fprintf(stderr, "\nNo quedan bloques índices libres.\n");
@@ -828,14 +831,15 @@ int cr_write(crFILE* file, void* buffer, int nbytes){
       int bits_puntero_dato[32];
       for(int j = inicio; j < (inicio + 32); j++){ //((int) pow(2,13) * 8) - 32
         bits_puntero_dato[j - inicio] = disco -> array_bloques[file -> bloque_indice] -> array_bits[j];
-        //fprintf(stderr, "%d", disco -> array_bloques[bloque_indice] -> array_bits[j]);
+        //fprintf(stderr, "%d", disco -> array_bloques[file -> bloque_indice] -> array_bits[j]);
       }
 
       bloque_dato = bits_to_int(bits_puntero_dato, 32);
       //printf("bloque dato: %d", bloque_dato);
       if(bloque_dato == 0){
+        printf("No tengo bloque de datos asignado..\n");
         //revisar que hayan bloques libres en el bitmap
-        int* puntero_datos;
+        int puntero_datos[32];
         int bloque_datos_libre = 0;
         for( int j = 2; j < ((int) pow(2,13))*8; j++){
           if(disco -> array_bloques[pos_dir + 1]-> array_bits[j] == 0){
@@ -850,13 +854,38 @@ int cr_write(crFILE* file, void* buffer, int nbytes){
             if(bloques_cargados[a] == bloque_datos_libre)
               cargado = 1;
           }
-          if(cargado == 0)
+          if(cargado == 0){
+            //printf("Cargando bloque: %d\n", file -> bloque_indice);
             cargar_bloque(disco, bloque_datos_libre);
-          puntero_datos = int_to_bits(bloque_datos_libre, 4);
+          }
+          fprintf(stderr, "\nbloque datos libre: %d\n", bloque_datos_libre);
+          cnt = 0;
+          int m = funcion_aux(bloque_datos_libre);
+          cnt2 = 0;
+          int puntero_datos_aux[cnt];
+          binario_largo(bloque_datos_libre, puntero_datos_aux);
+          //puntero_datos = int_to_bits(bloque_datos_libre, 4);
+          int bits_32_puntero[32];
+
+          int cnt3 = 0;
+          for(int n = 0; n < 32; n++){
+            if(n < 32 - cnt2){
+              puntero_datos[n] = 0;
+              //printf("0");
+            }
+            else{
+              puntero_datos[n] = puntero_datos_aux[cnt3];
+              //printf("%d", bits_tamano[cnt3]);
+              cnt3++;
+            }
+          }
+
+          printf("Puntero datos: ");
           for(int j = inicio; j < (inicio + 32); j++){ //((int) pow(2,13) * 8) - 32
             disco -> array_bloques[file -> bloque_indice] -> array_bits[j] = puntero_datos[j - inicio];
+            printf("%d", puntero_datos[j - inicio]);
           }
-          free(puntero_datos);
+          printf("\n");
         }
         bloque_dato = bloque_datos_libre;
         
@@ -1631,10 +1660,12 @@ int* int_to_bits(int n, int cantidad_bytes){
     bits_aux = byte_to_bits(bytes[i]);
     for(int j = 0; j < 8; j++){
       bits[cont2] = bits_aux[j];
+      fprintf(stderr, "%d", bits[cont2]);
       cont2 ++;
     }
     free(bits_aux);
   }
+  fprintf(stderr, "\n");
   return bits;
 }
 
