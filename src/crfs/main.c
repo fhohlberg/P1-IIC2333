@@ -7,86 +7,25 @@
 
 
 int main(int argc, char *argv[]){
+  /* NOMBRE DEL ARCHIVO BIN*/
   char* diskname = argv[1];
+  /** FUNCIONES GENERALES **/
+
+  /* MONTAR EL DISCO */
   cr_mount(diskname);
-  //cr_bitmap(1, true); //unsigned disk, bool hex (true = binario, false = hexadecimal)
-  //printf("%d",cr_exists(1,"Baroque.mp3"));
-  //printf("Estoy en disco 1\n");
-  /*printf("Directorio disco 1\n");
-  cr_ls(1);
-  printf("BITMAP  binario disco 1\n");
-  cr_bitmap(1, false); //unsigned disk, bool hex (true = binario, false = hexadecimal)
-  printf("BITMAP hexa disco 2\n");
-  cr_bitmap(2, true);
-  printf("Directorio disco 2\n");
-  cr_ls(2);
-  printf("Directorio disco 1\n");
-  cr_ls(1);
-  printf("Viendo si existe archivo text.txt en particion 3\n");
-  printf("Existe: %d\n", cr_exists(3, "text.txt"));
-  printf("Directorio disco 3\n");
-  cr_ls(3);
-  printf("Directorio disco 4\n");
-  cr_ls(4);
-  //printf("%d\n", cr_exists(1, "Baroque.mp3"));*/
 
-  //crFILE * file = cr_open(1, "guides.txt", 'r');
-
-  void* buffer = malloc(18);
-  buffer = " HOLA LUCRE Y FRAN";
-  //unsigned char buff;
-  //buff = (unsigned char*)buffer;
-  //printf("BUFFERR: %s\n", buffer);
-
-  //cr_read(file,0,23708);
-  //crFILE * file = cr_open(4, "1/Baroque.mp3", 'r');
-  //cr_read(file,0, 23800);
-  //cr_write(file, buffer, 18);
-  //printf("\nENTREMEDIO\n");
-  //cr_read(file,0, 23800);
-  //cr_ls(4);
-  //cr_unload(4, "1/Baroque.mp3", "file_disco/4/Baroque.mp3");
-  //cr_unload(2, "yes.mp3", "/Users/Sguazzotti/Desktop/yes.mp3");
-  //cr_unload(1, "Baroque.mp3", "/Users/Sguazzotti/Desktop/Baroque3.mp3");
-  //cr_bitmap(4, false);
-  //cr_unload(0, "particion", "/Users/Sguazzotti/Desktop/p1_prueba");
+  /* LA PRIMERA VEZ */
+  crFILE * file = cr_open(4, "texto_nuevo.txt", 'r');
+  void* buffer = malloc(sizeof(unsigned char)*115);
+  buffer = "¡Hola! Somos el grupo DFLL del proyecto de Sistemas Operativos. ¡Hemos creado un sistema de archivos inreíble!";
+  cr_write(file, buffer, 115);
+  cr_close(file);
 
 
+  //LA SEGUNDA VEZ
+  /*crFILE * file = cr_open(4, "texto_nuevo.txt", 'r');
+  void* buffer = malloc(sizeof(unsigned char)*115);
+  cr_read(file, buffer, 115);
+  cr_close(file);*/
 
-  //crFILE * file = cr_open(2, "yes.mp3", 'r');
-  //cr_read(file, 0, 24484977);
-  //crFILE * file = cr_open(1, "text.txt", 'r');
-  //cr_write(file, buffer, 19);
-  //cr_read(file, 0, 100);
-  //cr_read(file, 0, 100);
-
-  //cr_load(1, "gui2.txt");
-  //crFILE * file = cr_open(1, "gui2.txt", 'r');
-  //file -> tamano = 23000;
-  //cr_read(file,0, 23800);
-
-  //cr_hardlink(1, "guides.txt", "guides2.txt");
-  //crFILE * file2 = cr_open(1, "guides2.txt", 'r');
-  //cr_hardlink(1, "guides.txt", "guides3.txt");
-  //crFILE * file3 = cr_open(1, "guides3.txt", 'r');
-  //crFILE * file4 = cr_open(1, "guides.txt", 'r');
-
-  cr_softlink(1, 4, "guides.txt",  "guides.txt");
-  crFILE* file = cr_open(4, "1/guides.txt", 'r');
-  cr_read(file,0,100);
-
-  //cr_unload(1, "text.txt", "file_disco/text.txt");
-  //crFILE * file2 = cr_open(2, "text.txt", 'r');
-  //cr_read(file2, 0, 1000);
-
-  //cr_open(3, "hola.txt", 'w');
-  //cr_open(4, "hola.txt", 'w');
-
-
-  /*printf("Estoy en disco 2\n");
-  cr_ls(2);
-  printf("Estoy en disco 3\n");
-  cr_ls(3);
-  printf("Estoy en disco 4\n");
-  cr_ls(4);*/
 }
