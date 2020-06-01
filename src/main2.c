@@ -41,7 +41,7 @@ int main(int argc, char *argv[]){
   fprintf(stderr,"\n\nEscribimos en el archivo InformeSocial.txt y hacemos UNLOAD\n");
   void* buffer1 = malloc(sizeof(unsigned char)* 175);
   buffer1 = "\n\nBibliografía: Municipalidad de Puente Alto. (2018). Misión y Visión. abril 10, 2020, de Municipalidad de Puente Alto Sitio web: https://www.mpuentealto.cl/?page_id=21027";
-  cr_write(file, buffer1, 169);
+  cr_write(file, buffer1, 175);
   cr_unload(1, "InformeSocial.txt", "file_disco/InformeSocial.txt");
 
   fprintf(stderr,"\n\nLoad de archivo meme_computacion.jpg a la partición 1\n");

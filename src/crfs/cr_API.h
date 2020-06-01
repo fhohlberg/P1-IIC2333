@@ -49,6 +49,8 @@ int cr_unload(unsigned disk, char* orig, char* dest);
 int cr_load(unsigned disk, char* orig);
 int cr_hardlink(unsigned disk, char* orig, char* dest);
 int cr_softlink(unsigned disk_orig, unsigned disk_dest, char* orig, char* dest);
+void cr_rm(unsigned disk, char* filename);
+int cr_close(crFILE* file_desc);
 
 ////////////////////////
 //FUNCIONES EXTRAS AUX//
@@ -64,5 +66,8 @@ int* int_to_bits(int n, int cantidad_bytes);
 void print_file(crFILE* file);
 int cr_read_unload(crFILE* file, char* dest, int nbytes);
 unsigned long long binario_largo(unsigned long long n, int* array_bits);
+void respaldar_a_bin(int numero_bloque);
+void cr_close_bloque(int i);
+void respaldar_a_bin_bits(int numero_bloque);
 
 
