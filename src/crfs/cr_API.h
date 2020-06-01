@@ -67,7 +67,7 @@ void print_file(crFILE* file);
 int cr_read_unload(crFILE* file, char* dest, int nbytes);
 unsigned long long binario_largo(unsigned long long n, int* array_bits);
 void respaldar_a_bin(int numero_bloque);
-void cr_close_bloque(int i);
 void respaldar_a_bin_bits(int numero_bloque);
+void cr_dismount(char *diskname);
 
 
