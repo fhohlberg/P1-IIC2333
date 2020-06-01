@@ -14,18 +14,18 @@ int main(int argc, char *argv[]){
   /* MONTAR EL DISCO */
   cr_mount(diskname);
 
-  /* LA PRIMERA VEZ */
+  /* LA PRIMERA VEZ 
   crFILE * file = cr_open(4, "texto_nuevo.txt", 'r');
   void* buffer = malloc(sizeof(unsigned char)*115);
   buffer = "¡Hola! Somos el grupo DFLL del proyecto de Sistemas Operativos. ¡Hemos creado un sistema de archivos inreíble!";
   cr_write(file, buffer, 115);
-  cr_close(file);
+  cr_close(file);*/
 
 
   //LA SEGUNDA VEZ
-  /*crFILE * file = cr_open(4, "texto_nuevo.txt", 'r');
+  crFILE * file = cr_open(4, "texto_nuevo.txt", 'r');
   void* buffer = malloc(sizeof(unsigned char)*115);
   cr_read(file, buffer, 115);
-  cr_close(file);*/
+  cr_close(file);
 
 }
