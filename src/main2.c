@@ -5,7 +5,6 @@
 #include "cr_API.h"
 
 
-
 int main(int argc, char *argv[]){
   /* NOMBRE DEL ARCHIVO BIN*/
   char* diskname = argv[1];
@@ -22,7 +21,9 @@ int main(int argc, char *argv[]){
   buffer = "¡Hola! Somos el grupo DFLL del proyecto de Sistemas Operativos. ¡Hemos creado un sistema de archivos inreíble!";
   cr_write(file, buffer, 115);
   fprintf(stderr,"\nLeemos el archivo texto_nuevo.txt\n");
-  cr_read(file, buffer, 115);
+
+  void* buffer3;
+  cr_read(file, buffer3, 115);
   fprintf(stderr,"\nDescargamos el archivo creado texto_nuevo.txt\n");
   void* buffer2 = malloc(sizeof(unsigned char)*31);
   buffer2 = "\n\nVamos a descargar el archivo.";
@@ -62,6 +63,9 @@ int main(int argc, char *argv[]){
   free(file3);
   free(file4);
   free(file5);
+
+  //free(buffer);
+  //free(buffer2);
 
   cr_dismount(diskname);
 

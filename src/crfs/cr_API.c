@@ -556,10 +556,12 @@ crFILE* cr_open(unsigned disk, char* filename, char mode){
       }
       else{
         fprintf(stderr, "El archivo %s ha sido eliminado.\n", filename);
+        return 0;
       }
     }
     else{
       fprintf(stderr, "El archivo %s no existe.\n", filename);
+      return 0;
     }
   }
   else if (mode == 'w'){
@@ -661,11 +663,13 @@ crFILE* cr_open(unsigned disk, char* filename, char mode){
         }
         else{
           fprintf(stderr, "No hay espacio en directorio para crear el archivo.\n");
+          return 0;
         }
       }
     }
     else{
       fprintf(stderr, "El archivo %s ya existe, no se puede sobre escribir.\n", filename);
+      return 0;
     }
   }
   free(bits_entrada);
@@ -1126,6 +1130,7 @@ int cr_write(crFILE* file, void* buffer, int nbytes){
     n+=8;
   }
   //printf("\n");
+  //free(buffer);
   return contador;
 }
 
@@ -1244,6 +1249,9 @@ int cr_hardlink(unsigned disk, char* orig, char* dest){
     load = 1;
     crFILE *file_orig = cr_open(disk, orig, 'r');
     load = 0;
+    if(file_orig == 0){
+      return 0;
+    }
     char file_disco[32];
     int inicio = 0;
     int final = 32;
@@ -1341,12 +1349,15 @@ int cr_hardlink(unsigned disk, char* orig, char* dest){
       free(bits_indice);
       //free(bits_hardlink);
       free(file_orig);
-
-  }else{
+    }
+  else{
     fprintf(stderr, "No queda espacio en directorio para agregar el hardlink en la particion %d\n", disk);
+    return 0;
   }
-}else{
+}
+else{
   fprintf(stderr, "No se ha encontrado el archivo %s en la particion %d\n",orig, disk);
+  return 0;
 }
 }
 
@@ -1460,6 +1471,8 @@ void cr_rm(unsigned disk, char* filename) {
     load = 1;
     crFILE* archivo = cr_open(disk, filename, 'r');
     load = 0;
+    if(archivo == 0)
+      return;
     int bloque_directorio = (disk-1)*65536;
     archivo -> hardlinks --;
 
@@ -2010,7 +2023,7 @@ int cr_read_unload(crFILE* file, char* dest, int nbytes){
 }
 
 void cr_dismount(char *diskname){
-  fprintf(stderr, "DISMOUNT\n");
+  //fprintf(stderr, "DISMOUNT\n");
   for (int i = 0; i < pos_bloques_cargados; i ++){
     free(disco -> array_bloques[bloques_cargados[i]]->array_bits);
     free(disco -> array_bloques[bloques_cargados[i]]->array_bytes);

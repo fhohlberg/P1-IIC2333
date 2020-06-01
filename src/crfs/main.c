@@ -18,13 +18,15 @@ int main(int argc, char *argv[]){
   fprintf(stderr,"\nCreo un archivo nuevo texto_nuevo.txt, en modo 'write' en la partición 4\n");
   crFILE * file = cr_open(4, "texto_nuevo.txt", 'r');//cambiar a w
   fprintf(stderr,"\nEscribimos en el archivo creado texto_nuevo.txt\n");
-  void* buffer = malloc(sizeof(unsigned char)*115);
+  void* buffer;//= malloc(sizeof(unsigned char)*115);
   buffer = "¡Hola! Somos el grupo DFLL del proyecto de Sistemas Operativos. ¡Hemos creado un sistema de archivos inreíble!";
   cr_write(file, buffer, 115);
   fprintf(stderr,"\nLeemos el archivo texto_nuevo.txt\n");
-  cr_read(file, buffer, 115);
-  fprintf(stderr,"\n\nDescargamos el archivo creado texto_nuevo.txt\n");
-  void* buffer2 = malloc(sizeof(unsigned char)*31);
+
+  void* buffer3;
+  cr_read(file, buffer3, 115);
+  fprintf(stderr,"\nDescargamos el archivo creado texto_nuevo.txt\n");
+  void* buffer2;// = malloc(sizeof(unsigned char)*31);
   buffer2 = "\n\nVamos a descargar el archivo.";
   cr_write(file, buffer2, 31);
   cr_unload(4, "texto_nuevo.txt", "file_disco/texto_nuevo.txt");
@@ -63,8 +65,8 @@ int main(int argc, char *argv[]){
   free(file4);
   free(file5);
 
-  free(buffer);
-  free(buffer2);
+  //free(buffer);
+  //free(buffer2);
 
   cr_dismount(diskname);
 
