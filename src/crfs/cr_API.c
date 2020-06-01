@@ -13,6 +13,7 @@
   int cnt = 0;
   int cnt2 = 0;
   int load = 0;
+  int load2 = 0;
 
 
 ////////////////////////
@@ -771,13 +772,11 @@ int cr_read(crFILE* file, void* buffer, int nbytes){
     }
   }
 
-
-  //fprintf(stderr, "\nLeyendo %d Bytes del archivo: %s\n\n", bytes_restantes, file -> nombre);
-  for(int i = 0; i < contador; i++){
-    fprintf(stderr, "%c", buff[i]);
+  if(load2 == 1){
+    for(int i = 0; i < contador; i++){
+        fprintf(stderr, "%c", buff[i]);
+      }
   }
-  //fprintf(stderr, "contador: %d\n", contador);
-  //print_file(file);
   return contador;
 }
 
@@ -1445,71 +1444,16 @@ int cr_close(crFILE* file_desc){
   if(file_desc -> disk == 4)
     pos_dir_orig = 196608;
 
-
-  int bloque_dato;
-  int inicio = 12 * 8;//96
-  int parar = 0;
-
-  for(int i = 0; i < 2044; i++){
-    int bits_puntero_dato[32];
-    for(int j = inicio; j < (inicio + 32); j++){ //((int) pow(2,13) * 8) - 32
-        bits_puntero_dato[j - inicio] = disco -> array_bloques[file_desc -> bloque_indice] -> array_bits[j];
-        //fprintf(stderr, "%d", disco -> array_bloques[bloque_indice] -> array_bits[j]);
-    }
-    bloque_dato = bits_to_int(bits_puntero_dato, 32);
-    if (bloque_dato != 0){
-      //fprintf(stderr, "bloque dato: %d\n", bloque_dato);
-      //fprintf(stderr, pos)
-      int cargado = 0;
-      for(int a = 0; a < pos_bloques_cargados; a++){
-        //fprintf(stderr, "\nSoy bloque cargado: %d = bloque dato: %d\n", bloques_cargados[a] , bloque_dato);
-        if(bloques_cargados[a] == bloque_dato){
-          //printf("\nENTRE\n");
-          cargado = 1;
-          cr_close_bloque(bloque_dato);
-        }
-      }
-    }
-    inicio += 32;
-  }
-    
-
-
-  //Liberar bloques de datos a partir de los punteros
-  for (int i = 12*8; i < (2044 * 4 + 12)*8; i = i + 32){
-    int puntero_bits[32];
-    for (int j= 0; j < 32; j++){
-      puntero_bits[j] = disco -> array_bloques[file_desc -> bloque_indice] -> array_bits[i + j];
-    }
-    int puntero = bits_to_int(puntero_bits, 32);
-    if (puntero != 0){
-      //printf("M: %i\n", puntero );
-      cr_close_bloque(puntero);
-    }
-  }
-
-  //Liberar bloques de datos a partir del puntero indirecto
-  int puntero_indirecto_bits[32];
-  for (int x = 0; x < 32; x++){
-    puntero_indirecto_bits[x] = disco -> array_bloques[file_desc -> bloque_indice]-> array_bits[65536-32 + x];
-  }
-  int puntero_indirecto = bits_to_int(puntero_indirecto_bits, 32);
-
-  if (puntero_indirecto != 0){
-    for (int y = 0; y < 2045 * 4 * 8; y += 32){
-      int nuevo_bloque_bit[32];
-      for (int t = 0; t < 32; t ++){
-        nuevo_bloque_bit[t] = disco -> array_bloques[puntero_indirecto] -> array_bits[y + t];
-      }
-      int nuevo_bloque = bits_to_int(nuevo_bloque_bit, 32);
-      if (nuevo_bloque != 0){
-        cr_close_bloque(nuevo_bloque);
-      }
-    }
+  void* buffer = malloc(sizeof(unsigned char)*file_desc ->tamano);
+  load2 = 1;
+  cr_read(file_desc, buffer, file_desc -> tamano);
+  load2 = 0;
+  for(int a = 0; a < pos_bloques_cargados; a++){
+    respaldar_a_bin(bloques_cargados[a]);
   }
 
   // Liberar bloque indice
-  cr_close_bloque(file_desc -> bloque_indice);
+  //cr_close_bloque(file_desc -> bloque_indice);
   respaldar_a_bin_bits(pos_dir_orig);
   respaldar_a_bin_bits(pos_dir_orig + 1);
 
