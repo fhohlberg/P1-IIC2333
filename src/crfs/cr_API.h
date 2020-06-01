@@ -25,7 +25,6 @@ typedef struct crFILE
   char *nombre;
   unsigned long long int tamano; //tamano en Bytes
   int hardlinks;//cantidad de hardlinks
-  unsigned char* data; //contenido del file
   int pos_lect; //posicion de lectura del archivo
   int pos_esc;
   int bloque_indice; //

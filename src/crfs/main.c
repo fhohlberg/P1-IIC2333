@@ -24,6 +24,7 @@ int main(int argc, char *argv[]){
   //fprintf(stderr,"\nLeemos el archivo texto_nuevo.txt\n");
   cr_read(file, buffer, 115);
   free(buffer);
+  //free(file -> nombre);
   free(file);
 
 

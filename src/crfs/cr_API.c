@@ -653,6 +653,7 @@ crFILE* cr_open(unsigned disk, char* filename, char mode){
             disco -> array_bloques[pos_dir] -> array_bytes[i] = byte_aux;
           }
           free(bits_entrada);
+          free(bits_bloque_indice);
           return cr_open(disk, filename, 'r');
         }
         else{
@@ -856,6 +857,7 @@ int cr_write(crFILE* file, void* buffer, int nbytes){
             disco -> array_bloques[file -> bloque_indice] -> array_bits[j] = puntero_datos[j - inicio];          }
         }
         bloque_dato = bloque_datos_libre;
+        free(puntero_datos);
       }
       if (bloque_dato != 0){
         //fprintf(stderr, "bloque dato: %d\n", bloque_dato);
@@ -924,6 +926,7 @@ int cr_write(crFILE* file, void* buffer, int nbytes){
           disco -> array_bloques[file -> bloque_indice] -> array_bits[8188 + j] = puntero_datos2[j];          }
       }
       bloque_indirecto = bloque_datos_libre2;
+      free(puntero_datos2);
     }
     if (bloque_indirecto != 0){
       inicio1 = 0;
@@ -968,6 +971,7 @@ int cr_write(crFILE* file, void* buffer, int nbytes){
                 disco -> array_bloques[bloque_indirecto] -> array_bits[j] = puntero_datos1[j - inicio1];          }
             }
             bloque_dato1 = bloque_datos_libre1;
+            free(puntero_datos1);
           }
           if (bloque_dato1 != 0){
             //fprintf(stderr, "bloque dato: %d\n", bloque_dato);
@@ -1118,7 +1122,7 @@ int cr_load(unsigned disk, char* orig){
     void* buffer = malloc(sizeof(unsigned char)*(int)pow(2,4));
     load = 0;
 
-   while(fread(bytes,sizeof(bytes),1,archivo)){
+    while(fread(bytes,sizeof(bytes),1,archivo)){
       buffer = bytes;
       //  for(int j = 0; j < (int)pow(2,13); j++){
       //    bytes_malloc[j] = bytes[j];
@@ -1137,7 +1141,7 @@ int cr_load(unsigned disk, char* orig){
     fprintf(stderr,"\nNo se ha encontrado el archivo en su computador\n");
     return 0;
   }
-
+  fclose(archivo);
   return 1;
 }
 
@@ -1232,7 +1236,8 @@ int cr_hardlink(unsigned disk, char* orig, char* dest){
         disco -> array_bloques[file_orig -> bloque_indice] -> array_bytes[i] = byte_hardlink;
         //fprintf(stderr, "\nBYTES HARDLINK %u\n", byte_hardlink );
       }
-
+      free(bits_indice);
+      free(bits_hardlink);
 
   }else{
     fprintf(stderr, "No queda espacio en directorio para agregar el hardlink en la particion %d\n", disk);
@@ -1333,6 +1338,7 @@ int cr_softlink(unsigned disk_orig, unsigned disk_dest, char* orig, char* dest){
         disco -> array_bloques[pos_dir_dest] -> array_bytes[i] = byte_aux;
         //printf("\n");
       }
+      free(bits_indice);
     }
     else{
       fprintf(stderr, "No hay espacio en directorio para crear un softlink en la particion %d.\n", disk_dest);
@@ -1443,6 +1449,7 @@ void cr_rm(unsigned disk, char* filename) {
       fprintf(stderr, "Se ha eliminado una referencia al archivo %s. Le quedan %i referencias. \n", filename, archivo -> hardlinks);
     }
     //cr_close(archivo); // no creo que haya que hacer esto, osi?
+    free(bits_hardlink);
   }
 
   else {
@@ -1504,6 +1511,8 @@ int cr_close(crFILE* file_desc){
   respaldar_a_bin_bits(pos_dir_orig);
   respaldar_a_bin_bits(pos_dir_orig + 1);
   free(buffer);
+  //free(file_desc -> nombre);
+  //free(file_desc);
   return 1;
 }
 
@@ -1734,6 +1743,7 @@ Disco* disco_init(char *filename){
   }
 
   fclose(archivo);
+  free(bytes_malloc);
   return disco;
 }
 
@@ -1868,6 +1878,7 @@ int cr_read_unload(crFILE* file, char* dest, int nbytes){
     }
   }
   file -> pos_lect = inicio_lectura_aux;
+  fclose(destino);
   return 1;
 }
 
