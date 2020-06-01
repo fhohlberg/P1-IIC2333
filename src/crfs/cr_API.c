@@ -471,19 +471,19 @@ crFILE* cr_open(unsigned disk, char* filename, char mode){
           //fprintf(stderr, "FILE NAME: %s\n", aux2_filename);
 
           if (aux_particion == '1'){
-            FILE *file = cr_open(1, aux2_filename,mode);
+            crFILE *file = cr_open(1, aux2_filename,mode);
             return file;
           }
           else if (aux_particion == '2'){
-            FILE *file = cr_open(2, aux2_filename,mode);
+            crFILE *file = cr_open(2, aux2_filename,mode);
             return file;
           }
           else if (aux_particion == '3'){
-            FILE *file = cr_open(3, aux2_filename,mode);
+            crFILE *file = cr_open(3, aux2_filename,mode);
             return file;
           }
           else if (aux_particion == '4'){
-            FILE *file = cr_open(4, aux2_filename,mode);
+            crFILE *file = cr_open(4, aux2_filename,mode);
             return file;
           }
         }
@@ -540,7 +540,6 @@ crFILE* cr_open(unsigned disk, char* filename, char mode){
         //fprintf(stderr, "\nLeyendo %d Bytes del archivo: %s\n", file -> tamano, file -> nombre);
         //fprintf(stderr, "\n");
         //fprintf(stderr, "%d\n", tamano);
-
         if(load == 0)
           print_file(file);
         return file;
@@ -651,8 +650,8 @@ crFILE* cr_open(unsigned disk, char* filename, char mode){
     else{
       fprintf(stderr, "El archivo %s ya existe, no se puede sobre escribir.\n", filename);
     }
-    return 0;
   }
+  return 0;
 }
 
 int cr_read(crFILE* file, void* buffer, int nbytes){
@@ -998,7 +997,7 @@ int cr_write(crFILE* file, void* buffer, int nbytes){
 
   //fprintf(stderr,"TAMANO FILE: %d\n" ,file ->tamano);
   cnt = 0;
-  funcion_aux(file ->tamano);
+  int m = funcion_aux(file ->tamano);
   cnt2 = 0;
   int bits_tamano[cnt];
   binario_largo(file -> tamano, bits_tamano);
@@ -1143,7 +1142,7 @@ int cr_hardlink(unsigned disk, char* orig, char* dest){
       fprintf(stderr, "Partición %d no es válida.\n", disk);
       return 0;
     }
-    crFILE *file_orig = cr_open(1, orig, 'r');
+    crFILE *file_orig = cr_open(disk, orig, 'r');
     char file_disco[32];
     int inicio = 0;
     int final = 32;
@@ -1282,7 +1281,7 @@ int cr_softlink(unsigned disk_orig, unsigned disk_dest, char* orig, char* dest){
       char nombre_soft[255];
       sprintf(nombre_soft, "%d/%s",disk_orig, orig);
       strcpy(bytes_nombre, nombre_soft);
-      fprintf(stderr, "NOMBRE SOFTLINK : %s\n", nombre_soft);
+      fprintf(stderr, "NOMBRE SOFTLINK: %s\n", nombre_soft);
       int bits_nombre[232];
       int* bits_nombre_aux;
       int cont = 0;
@@ -1317,13 +1316,17 @@ int cr_softlink(unsigned disk_orig, unsigned disk_dest, char* orig, char* dest){
         disco -> array_bloques[pos_dir_dest] -> array_bytes[i] = byte_aux;
         //printf("\n");
       }
-
-  }else{
-    fprintf(stderr, "No hay espacio en directorio para crear un softlink en la particion %d.\n", disk_dest);
+    }
+    else{
+      fprintf(stderr, "No hay espacio en directorio para crear un softlink en la particion %d.\n", disk_dest);
+      return 0;
+    } 
   }
-}else{
-  fprintf(stderr, "No se ha encontrado el archivo de origen %s en la particion %d.\n",  orig, disk_orig);
-}
+  else{
+    fprintf(stderr, "No se ha encontrado el archivo de origen %s en la particion %d.\n",  orig, disk_orig);
+    return 0;
+  }
+  return 1;
 }
 
 
@@ -1413,7 +1416,7 @@ int* int_to_bits(int n, int cantidad_bytes){
 
 void print_file(crFILE* file){
   fprintf(stderr, "-----------------------------------------------------------\n");
-  fprintf(stderr, "Nombre archivo: %s  Tamaño archivo: %d Bytes\n", file -> nombre, file -> tamano);
+  fprintf(stderr, "Nombre archivo: %s  Tamaño archivo: %llu Bytes\n", file -> nombre, file -> tamano);
   fprintf(stderr, "Cantidad de Hardlinks: %d\n", file -> hardlinks);
   fprintf(stderr, "-----------------------------------------------------------\n");
   //for (int i = 0; i < file -> tamano; i++)
