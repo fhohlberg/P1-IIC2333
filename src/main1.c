@@ -44,5 +44,5 @@ int main(int argc, char *argv[]){
   fprintf(stderr, "¿Existe proyecto-iic2333.png en la partición 2? %d\n", cr_exists(2, "proyecto-iic2333.png"));
   fprintf(stderr, "¿Existe heapsort.png en la partición 7? %d\n\n", cr_exists(7, "heapsort.png"));
 
-
+  cr_dismount(diskname);
 }

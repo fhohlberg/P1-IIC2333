@@ -57,4 +57,12 @@ int main(int argc, char *argv[]){
   //cr_close(file4);
   //cr_close(file5);
 
+  free(file);
+  free(file2);
+  free(file3);
+  free(file4);
+  free(file5);
+
+  cr_dismount(diskname);
+
 }

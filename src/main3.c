@@ -61,4 +61,10 @@ int main(int argc, char *argv[]){
   cr_close(file);
   cr_close(file_meme);
 
+  free(file);
+  free(file_meme);
+  free(file2);
+
+  cr_dismount(diskname);
+
 }

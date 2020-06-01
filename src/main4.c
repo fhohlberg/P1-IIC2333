@@ -21,4 +21,5 @@ int main(int argc, char *argv[]){
   fprintf(stderr,"\nDescargar disco completo:\n");
   cr_unload(0, "disco", "file_disco");
   
+  cr_dismount(diskname);
 }
