@@ -5,48 +5,69 @@
 #include "cr_API.h"
 
 
-
 int main(int argc, char *argv[]){
   /* NOMBRE DEL ARCHIVO BIN*/
   char* diskname = argv[1];
-
-  /** FUNCIONES UNLOAD y LOAD **/
+  /** FUNCIONES GENERALES **/
 
   /* MONTAR EL DISCO */
   cr_mount(diskname);
 
-  /* UNLOAD */
-  fprintf(stderr,"\nFUNCIONES cr_unload y cr_load\n\n");
+  /* CREAR ARCHIVO NUEVO, ESCRIBIR DENTRO, LEER y DESCARGAR */
+  fprintf(stderr,"\nCreo un archivo nuevo texto_nuevo.txt, en modo 'write' en la partición 4\n");
+  crFILE * file = cr_open(4, "texto_nuevo.txt", 'w');//cambiar a w
+  fprintf(stderr,"\nEscribimos en el archivo creado texto_nuevo.txt\n");
+  void* buffer;
+  buffer = "¡Hola! Somos el grupo DFLL del proyecto de Sistemas Operativos. ¡Hemos creado un sistema de archivos inreíble!";
+  cr_write(file, buffer, 115);
+  fprintf(stderr,"\nLeemos el archivo texto_nuevo.txt\n");
 
-  fprintf(stderr,"Descargar archivo guides.txt de la partición 1:\n");
-  cr_unload(1, "guides.txt", "file_disco/guides.txt");
+  void* buffer3;
+  cr_read(file, buffer3, 115);
+  fprintf(stderr,"\nDescargamos el archivo creado texto_nuevo.txt\n");
+  void* buffer2;
+  buffer2 = "\nVamos a descargar el archivo.";
+  cr_write(file, buffer2, 31);
+  cr_unload(4, "texto_nuevo.txt", "file_disco/texto_nuevo.txt");
 
-  fprintf(stderr,"Descargar archivo QPC.gif de la partición 1:\n");
-  cr_unload(1, "QPC.gif", "file_disco/QPC.gif");
+  /* CREAR UN HARDLINK */
+  fprintf(stderr,"\n\nCreamos un hardlink en la partición 1 a heapsort.png, llamado heapsort_hardlink.png\n");
+  cr_hardlink(1, "heapsort.png", "heapsort_hardlink.png");
+  fprintf(stderr,"\nAbrimos heapsort.png de la partición 1\n");
+  crFILE * file4 = cr_open(1, "heapsort.png", 'r');
+  fprintf(stderr,"\n\nElimino de la partición 1 el archivo heapsort.png\n");
+  cr_rm(1, "heapsort.png");
+  fprintf(stderr,"\n\nAbrimos el archivo heapsort_hardlink.png de la partición 1\n");
+  crFILE* file2 = cr_open(1, "heapsort_hardlink.png", 'r');
 
-  fprintf(stderr,"Descargar archivo text.txt de la partición 2:\n");
-  cr_unload(2, "text.txt", "file_disco/text.txt");
+  /* CREAR UN SOFTLINK */
+  fprintf(stderr,"\nCreo un softlink en la partición 3 al archivo guides.txt de la partición 1\n");
+  cr_softlink(1, 3, "guides.txt", "1/guides.txt");
+  fprintf(stderr,"\nAbrimos guides.txt de la partición 1\n");
+  crFILE * file5 = cr_open(1, "guides.txt", 'r');
+  fprintf(stderr,"\nAhora eliminamos el archivo guides.txt de la partición 1\n");
+  cr_rm(1, "guides.txt");
+  //TIRA ERROR YA QUE SE ELIMINA EL ARCHIVO AL QUE APUNTA EL SOFTLINK
+  fprintf(stderr,"\n\nAbrimos el archivo 1/guides.txt de la partición 3\n");
+  crFILE* file3 = cr_open(3, "1/guides.txt", 'r');
 
-  /* LOAD */
-  fprintf(stderr,"\n\nLoad de archivo InformeSocial.txt a la partición 1\n");
-  cr_load(1, "InformeSocial.txt"); //el informe tiene 12217 caracteres (bytes)
-  void* buffer = malloc(sizeof(unsigned char) * 500);
+  /* CERRAMOS LOS ARCHIVOS ABIERTOS (ACTUALIZAR ARCHIVO .BIN) QUE NO HAN SIDO ELIMINADOS */ 
+  if(file != 0){// PARA EL DISCO SIMDISKFORMAT, SE DEBE REVISAR QUE EL ARCHIVO EXISTA ANTES DE CERRARLO (NO EXISTE)
+    cr_close(file);
+  }
+  if(file2 != 0){ 
+    cr_close(file2);
+  }
 
-  fprintf(stderr,"\n\nAbriendo archivo InformeSocial.txt\n");
-  crFILE* file = cr_open(1, "InformeSocial.txt", 'r');
-  fprintf(stderr,"\n\nLeemos los primeros 1000 caracteres de InformeSocial.txt\n\n");
-  cr_read(file, buffer, 500);
-  cr_read(file, buffer, 500);
+  free(file);
+  free(file2);
+  free(file3);
+  free(file4);
+  free(file5);
 
-  fprintf(stderr,"\n\nEscribimos en el archivo InformeSocial.txt y hacemos UNLOAD\n");
-  void* buffer1 = malloc(sizeof(unsigned char)* 175);
-  buffer1 = "\n\nBibliografía: Municipalidad de Puente Alto. (2018). Misión y Visión. abril 10, 2020, de Municipalidad de Puente Alto Sitio web: https://www.mpuentealto.cl/?page_id=21027";
-  cr_write(file, buffer1, 175);
-  cr_unload(1, "InformeSocial.txt", "file_disco/InformeSocial.txt");
+  //free(buffer);
+  //free(buffer2);
 
-  fprintf(stderr,"\n\nLoad de archivo meme_computacion.jpg a la partición 1\n");
-  cr_load(1, "meme_computacion.jpg"); 
-  fprintf(stderr,"\n\nAbriendo archivo meme_computacion.jpg\n");
-  crFILE* file_meme = cr_open(1, "meme_computacion.jpg", 'r');
+  cr_dismount(diskname);
 
 }

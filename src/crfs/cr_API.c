@@ -325,10 +325,10 @@ void cr_ls(unsigned disk){
 }
 
 crFILE* cr_open(unsigned disk, char* filename, char mode){
+  int* bits_entrada = malloc(sizeof(int)*24);
   if(mode == 'r'){
     if(cr_exists(disk, filename) == 1){
       unsigned char bytes_entrada[4];
-      int* bits_entrada = malloc(sizeof(int)*24);
       if(disk == 1){
         char file_disco[29];
         int inicio_puntero = 0;
@@ -357,6 +357,7 @@ crFILE* cr_open(unsigned disk, char* filename, char mode){
             bits_entrada[8*(j - inicio_puntero) + k] = bits_aux[k];
             //fprintf(stderr, "%d", bits_entrada[8*(j - inicio_puntero) + k]);
           }
+          free(bits_aux);
         }
       }
       else if(disk == 2){
@@ -387,6 +388,7 @@ crFILE* cr_open(unsigned disk, char* filename, char mode){
             bits_entrada[8*(j - inicio_puntero) + k] = bits_aux[k];
             //fprintf(stderr, "%d", bits_entrada[8*(j - inicio_puntero) + k]);
           }
+          free(bits_aux);
         }
       }
       else if(disk == 3){
@@ -417,6 +419,7 @@ crFILE* cr_open(unsigned disk, char* filename, char mode){
             bits_entrada[8*(j - inicio_puntero) + k] = bits_aux[k];
             //fprintf(stderr, "%d", bits_entrada[8*(j - inicio_puntero) + k]);
           }
+          free(bits_aux);
         }
       }
       else if(disk == 4){
@@ -447,6 +450,7 @@ crFILE* cr_open(unsigned disk, char* filename, char mode){
             bits_entrada[8*(j - inicio_puntero) + k] = bits_aux[k];
             //fprintf(stderr, "%d", bits_entrada[8*(j - inicio_puntero) + k]);
           }
+          free(bits_aux);
         }
       }
     //  fprintf(stderr, "bits validacion %d\n",bits_entrada[0]);
@@ -454,6 +458,7 @@ crFILE* cr_open(unsigned disk, char* filename, char mode){
         crFILE* file = malloc(sizeof(crFILE));
         file -> pos_lect = 0;
         file -> nombre = filename;
+        file -> disk = disk;
         int bits_puntero[23];
         for(int i = 0; i < 23; i ++){
           bits_puntero[i] = bits_entrada[i + 1];
@@ -472,20 +477,28 @@ crFILE* cr_open(unsigned disk, char* filename, char mode){
           //fprintf(stderr, "FILE NAME: %s\n", aux2_filename);
 
           if (aux_particion == '1'){
-            crFILE *file = cr_open(1, aux2_filename,mode);
-            return file;
+            //crFILE *file = cr_open(1, aux2_filename,mode);
+            free(file);
+            free(bits_entrada);
+            return cr_open(1, aux2_filename,mode);;
           }
           else if (aux_particion == '2'){
-            crFILE *file = cr_open(2, aux2_filename,mode);
-            return file;
+            //crFILE *file = cr_open(2, aux2_filename,mode);
+            free(file);
+            free(bits_entrada);
+            return cr_open(2, aux2_filename,mode);
           }
           else if (aux_particion == '3'){
-            crFILE *file = cr_open(3, aux2_filename,mode);
-            return file;
+            //crFILE *file = cr_open(3, aux2_filename,mode);
+            free(file);
+            free(bits_entrada);
+            return cr_open(3, aux2_filename,mode);
           }
           else if (aux_particion == '4'){
-            crFILE *file = cr_open(4, aux2_filename,mode);
-            return file;
+            //crFILE *file = cr_open(4, aux2_filename,mode);
+            free(file);
+            free(bits_entrada);
+            return cr_open(4, aux2_filename,mode);
           }
         }
 
@@ -537,20 +550,24 @@ crFILE* cr_open(unsigned disk, char* filename, char mode){
         file -> tamano = tamano;
         file -> bloque_indice = bloque_indice;
         file -> pos_esc = file -> tamano;
-        file -> disk = disk;
         //fprintf(stderr, "\nLeyendo %d Bytes del archivo: %s\n", file -> tamano, file -> nombre);
         //fprintf(stderr, "\n");
         //fprintf(stderr, "%d\n", tamano);
         if(load == 0)
           print_file(file);
+        free(bits_entrada);
         return file;
       }
       else{
         fprintf(stderr, "El archivo %s ha sido eliminado.\n", filename);
+        free(bits_entrada);
+        return 0;
       }
     }
     else{
       fprintf(stderr, "El archivo %s no existe.\n", filename);
+      free(bits_entrada);
+      return 0;
     }
   }
   else if (mode == 'w'){
@@ -599,13 +616,17 @@ crFILE* cr_open(unsigned disk, char* filename, char mode){
             }
           }
           if(bloque_indice_libre != -1){
+            //printf("\nBloque indice asignado: %d\n", bloque_indice_libre);
             bits_bloque_indice = int_to_bits(bloque_indice_libre, 3);
-            for(int i = 0; i < 24; i++){
-              bits_bloque_indice[0] = 1;
-            }
+            //for(int i = 0; i < 24; i++){
+              //fprintf(stderr, "%d", bits_bloque_indice[i]);
+            //}
+            //printf("\n");
+            bits_bloque_indice[0] = 1;
           }
           else{
             fprintf(stderr, "\nNo quedan bloques índices libres.\n");
+            free(bits_entrada);
             return 0;
           }
           unsigned char bytes_nombre[29];
@@ -623,6 +644,7 @@ crFILE* cr_open(unsigned disk, char* filename, char mode){
               bits_nombre[cont] = bits_nombre_aux[j];
               cont++;
             }
+            free(bits_nombre_aux);
           }
           int cont2 = 0;
           //printf("inicio: %d, final: %d\n", inicio, final);
@@ -641,25 +663,36 @@ crFILE* cr_open(unsigned disk, char* filename, char mode){
             unsigned char byte_aux = bits_to_int(bits_aux, 8);
             disco -> array_bloques[pos_dir] -> array_bytes[i] = byte_aux;
           }
+          free(bits_entrada);
+          free(bits_bloque_indice);
           return cr_open(disk, filename, 'r');
         }
         else{
           fprintf(stderr, "No hay espacio en directorio para crear el archivo.\n");
+          free(bits_entrada);
+          return 0;
         }
       }
     }
     else{
       fprintf(stderr, "El archivo %s ya existe, no se puede sobre escribir.\n", filename);
+      free(bits_entrada);
+      return 0;
     }
   }
+  free(bits_entrada);
   return 0;
 }
 
 int cr_read(crFILE* file, void* buffer, int nbytes){
+  if(file == 0){
+    return 0;
+  }
   unsigned long long int bytes_restantes = file -> tamano - file -> pos_lect;
   int inicio_lectura = file ->  pos_lect;
   int bloque_actual = (int) (inicio_lectura / (int) pow(2,13));
   int byte_actual = inicio_lectura - (bloque_actual*(int) pow(2,13));
+
 
   if(nbytes > bytes_restantes){
     file -> pos_lect += bytes_restantes;
@@ -674,7 +707,6 @@ int cr_read(crFILE* file, void* buffer, int nbytes){
   buff = (unsigned char*)buffer;
   int contador = 0;
   if(file -> tamano != 0){
-    //file -> data = malloc(sizeof(unsigned char)* (file -> tamano));
 
     int bloque_dato;
     int inicio = 12 * 8;//96
@@ -772,15 +804,19 @@ int cr_read(crFILE* file, void* buffer, int nbytes){
     }
   }
 
-  if(load2 == 1){
+  if(load2 == 0){
     for(int i = 0; i < contador; i++){
         fprintf(stderr, "%c", buff[i]);
       }
   }
+  free(buffer);
   return contador;
 }
 
 int cr_write(crFILE* file, void* buffer, int nbytes){
+  if(file == 0){
+    return 0;
+  }
   int pos_dir = 0;
   //printf("NOMBRE ARCHIVO: %s\n", file -> nombre);
   if(file -> disk == 1)
@@ -812,14 +848,15 @@ int cr_write(crFILE* file, void* buffer, int nbytes){
       int bits_puntero_dato[32];
       for(int j = inicio; j < (inicio + 32); j++){ //((int) pow(2,13) * 8) - 32
         bits_puntero_dato[j - inicio] = disco -> array_bloques[file -> bloque_indice] -> array_bits[j];
-        //fprintf(stderr, "%d", disco -> array_bloques[bloque_indice] -> array_bits[j]);
+        //fprintf(stderr, "%d", disco -> array_bloques[file -> bloque_indice] -> array_bits[j]);
       }
 
       bloque_dato = bits_to_int(bits_puntero_dato, 32);
       //printf("bloque dato: %d", bloque_dato);
       if(bloque_dato == 0){
+        //printf("No tengo bloque de datos asignado..\n");
         //revisar que hayan bloques libres en el bitmap
-        int* puntero_datos;
+        int puntero_datos[32];
         int bloque_datos_libre = 0;
         for( int j = 2; j < ((int) pow(2,13))*8; j++){
           if(disco -> array_bloques[pos_dir + 1]-> array_bits[j] == 0){
@@ -834,13 +871,41 @@ int cr_write(crFILE* file, void* buffer, int nbytes){
             if(bloques_cargados[a] == bloque_datos_libre)
               cargado = 1;
           }
-          if(cargado == 0)
+          if(cargado == 0){
+            //printf("Cargando bloque: %d\n", file -> bloque_indice);
             cargar_bloque(disco, bloque_datos_libre);
-          puntero_datos = int_to_bits(bloque_datos_libre, 4);
+          }
+          //fprintf(stderr, "\nbloque datos libre: %d\n", bloque_datos_libre);
+          cnt = 0;
+          int m = funcion_aux(bloque_datos_libre);
+          cnt2 = 0;
+          int puntero_datos_aux[cnt];
+          binario_largo(bloque_datos_libre, puntero_datos_aux);
+          //puntero_datos = int_to_bits(bloque_datos_libre, 4);
+          int bits_32_puntero[32];
+
+          int cnt3 = 0;
+          for(int n = 0; n < 32; n++){
+            if(n < 32 - cnt2){
+              puntero_datos[n] = 0;
+              //printf("0");
+            }
+            else{
+              puntero_datos[n] = puntero_datos_aux[cnt3];
+              //printf("%d", bits_tamano[cnt3]);
+              cnt3++;
+            }
+          }
+
+          //printf("Puntero datos: ");
           for(int j = inicio; j < (inicio + 32); j++){ //((int) pow(2,13) * 8) - 32
-            disco -> array_bloques[file -> bloque_indice] -> array_bits[j] = puntero_datos[j - inicio];          }
+            disco -> array_bloques[file -> bloque_indice] -> array_bits[j] = puntero_datos[j - inicio];
+            //printf("%d", puntero_datos[j - inicio]);
+          }
+          //printf("\n");
         }
         bloque_dato = bloque_datos_libre;
+        
       }
       if (bloque_dato != 0){
         //fprintf(stderr, "bloque dato: %d\n", bloque_dato);
@@ -887,7 +952,7 @@ int cr_write(crFILE* file, void* buffer, int nbytes){
     int inicio1 = 0;
     if(bloque_indirecto == 0){
       //revisar que hayan bloques libres en el bitmap
-      int* puntero_datos2;
+      int puntero_datos2[32];
       int bloque_datos_libre2 = 0;
       for( int j = 2; j < ((int) pow(2,13))*8; j++){
         if(disco -> array_bloques[pos_dir + 1]-> array_bits[j] == 0){
@@ -904,9 +969,33 @@ int cr_write(crFILE* file, void* buffer, int nbytes){
         }
         if(cargado == 0)
           cargar_bloque(disco, bloque_datos_libre2);
-        puntero_datos2 = int_to_bits(bloque_datos_libre2, 4);
+
+        cnt = 0;
+        int m = funcion_aux(bloque_datos_libre2);
+        cnt2 = 0;
+        int puntero_datos2_aux[cnt];
+        binario_largo(bloque_datos_libre2, puntero_datos2_aux);
+        //puntero_datos = int_to_bits(bloque_datos_libre, 4);
+
+
+        int cnt10 = 0;
+        for(int n = 0; n < 32; n++){
+          if(n < 32 - cnt2){
+            puntero_datos2[n] = 0;
+            //printf("0");
+          }
+          else{
+            puntero_datos2[n] = puntero_datos2_aux[cnt10];
+            //printf("%d", bits_tamano[cnt3]);
+            cnt10++;
+          }
+        }
+
+        //puntero_datos2 = int_to_bits(bloque_datos_libre2, 4);
         for(int j = 0; j < 32; j++){ //((int) pow(2,13) * 8) - 32
-          disco -> array_bloques[file -> bloque_indice] -> array_bits[8188 + j] = puntero_datos2[j];          }
+          disco -> array_bloques[file -> bloque_indice] -> array_bits[8188 + j] = puntero_datos2[j];
+        }
+        //free(puntero_datos2);
       }
       bloque_indirecto = bloque_datos_libre2;
     }
@@ -931,7 +1020,7 @@ int cr_write(crFILE* file, void* buffer, int nbytes){
           bloque_dato1 = bits_to_int(bits_puntero_dato1, 32);
           if(bloque_dato1 == 0){
             //revisar que hayan bloques libres en el bitmap
-            int* puntero_datos1;
+            int puntero_datos1[32];
             int bloque_datos_libre1 = 0;
             for( int j = 2; j < ((int) pow(2,13))*8; j++){
               if(disco -> array_bloques[pos_dir + 1]-> array_bits[j] == 0){
@@ -948,11 +1037,36 @@ int cr_write(crFILE* file, void* buffer, int nbytes){
               }
               if(cargado == 0)
                 cargar_bloque(disco, bloque_datos_libre1);
-              puntero_datos1 = int_to_bits(bloque_datos_libre1, 4);
+
+              cnt = 0;
+              int m = funcion_aux(bloque_datos_libre1);
+              cnt2 = 0;
+              int puntero_datos1_aux[cnt];
+              binario_largo(bloque_datos_libre1, puntero_datos1_aux);
+              //puntero_datos = int_to_bits(bloque_datos_libre, 4);
+
+
+              int cnt12 = 0;
+              for(int n = 0; n < 32; n++){
+                if(n < 32 - cnt2){
+                  puntero_datos1[n] = 0;
+                  //printf("0");
+                }
+                else{
+                  puntero_datos1[n] = puntero_datos1_aux[cnt12];
+                  //printf("%d", bits_tamano[cnt3]);
+                  cnt12++;
+                }
+              }
+
+              //puntero_datos1 = int_to_bits(bloque_datos_libre1, 4);
               for(int j = inicio1; j < (inicio1 + 32); j++){ //((int) pow(2,13) * 8) - 32
-                disco -> array_bloques[bloque_indirecto] -> array_bits[j] = puntero_datos1[j - inicio1];          }
+                disco -> array_bloques[bloque_indirecto] -> array_bits[j] = puntero_datos1[j - inicio1];
+              }
+              //free(puntero_datos1);
             }
             bloque_dato1 = bloque_datos_libre1;
+            
           }
           if (bloque_dato1 != 0){
             //fprintf(stderr, "bloque dato: %d\n", bloque_dato);
@@ -1029,6 +1143,7 @@ int cr_write(crFILE* file, void* buffer, int nbytes){
     n+=8;
   }
   //printf("\n");
+  //free(buffer);
   return contador;
 }
 
@@ -1054,7 +1169,8 @@ int cr_unload(unsigned disk, char* orig, char* dest){
     for(int i = 1 ; i < 5; i++){
       sprintf(buff, "%s/%d", dest, i);
       cr_unload(i, "particion", buff);
-    }}
+    }
+  }
 
   else if(strcmp(orig, "particion") == 0 && (pos_dir != -1)&& (disk != 0)){
     char file_disco[29];
@@ -1072,6 +1188,7 @@ int cr_unload(unsigned disk, char* orig, char* dest){
         //fprintf(stderr,"\nBUFF %s\n",  buff);
         crFILE* up_file = cr_open(disk, file_disco, 'r');
         cr_read_unload(up_file, buff, up_file -> tamano);
+        free(up_file);
       }
       inicio += 32;
       final += 32;
@@ -1082,6 +1199,7 @@ int cr_unload(unsigned disk, char* orig, char* dest){
     //printf("ENTRE A UNLOAD\n");
     crFILE* up_file = cr_open(disk, orig, 'r');
     cr_read_unload(up_file, dest, up_file -> tamano);
+    free(up_file);
   }
   else{
     fprintf(stderr,"\nNo existe el archivo %s en la partición %d.\n", orig, disk);
@@ -1090,8 +1208,8 @@ int cr_unload(unsigned disk, char* orig, char* dest){
 
 int cr_load(unsigned disk, char* orig){
   //supuesto: orig no esta dentro de una carpeta
-  FILE *archivo;
-  if((archivo = fopen(orig,"rb"))!=NULL){
+  FILE *archivo = fopen(orig,"rb");
+  if(archivo !=NULL){
     //fprintf(stderr,"\nSe encontro el archivo\n");
     unsigned char bytes[(int)pow(2,4)]; //(int)pow(2,13)
     unsigned char* bytes_malloc = malloc(sizeof(unsigned char)*(int)pow(2,4));
@@ -1100,10 +1218,16 @@ int cr_load(unsigned disk, char* orig){
     int bytes_restantes;
     load = 1;
     crFILE *file_nuevo = cr_open(disk, orig, 'w');
-    void* buffer = malloc(sizeof(unsigned char)*(int)pow(2,4));
+    void* buffer;
     load = 0;
+    if(file_nuevo == 0){
+      fclose(archivo);
+      free(bytes_malloc);
+      free(file_nuevo);
+      return 0;
+    }
 
-   while(fread(bytes,sizeof(bytes),1,archivo)){
+    while(fread(bytes,sizeof(bytes),1,archivo)){
       buffer = bytes;
       //  for(int j = 0; j < (int)pow(2,13); j++){
       //    bytes_malloc[j] = bytes[j];
@@ -1114,12 +1238,16 @@ int cr_load(unsigned disk, char* orig){
         //return -1;
       //}
     }
-    fclose(archivo);
+    //fclose(archivo);
+    free(bytes_malloc);
+    //free(buffer);
+    free(file_nuevo);
   }
   else{
     fprintf(stderr,"\nNo se ha encontrado el archivo en su computador\n");
     return 0;
   }
+  fclose(archivo);
   return 1;
 }
 
@@ -1141,6 +1269,10 @@ int cr_hardlink(unsigned disk, char* orig, char* dest){
     load = 1;
     crFILE *file_orig = cr_open(disk, orig, 'r');
     load = 0;
+    if(file_orig == 0){
+      free(file_orig);
+      return 0;
+    }
     char file_disco[32];
     int inicio = 0;
     int final = 32;
@@ -1174,6 +1306,7 @@ int cr_hardlink(unsigned disk, char* orig, char* dest){
           bits_nombre[cont] = bits_nombre_aux[j];
           cont++;
         }
+        free(bits_nombre_aux);
       }
       int cont2 = 0;
       int *bits_indice = int_to_bits(file_orig -> bloque_indice, 3);
@@ -1197,7 +1330,28 @@ int cr_hardlink(unsigned disk, char* orig, char* dest){
         disco -> array_bloques[pos_dir] -> array_bytes[i] = byte_aux;
       }
       file_orig -> hardlinks += 1;
-      int *bits_hardlink = int_to_bits(file_orig ->hardlinks, 4);
+      //int *bits_hardlink = int_to_bits(file_orig ->hardlinks, 4);
+      int bits_hardlink[32];
+      cnt = 0;
+      int m = funcion_aux(file_orig ->hardlinks);
+      cnt2 = 0;
+      int bits_hardling_aux[cnt];
+      binario_largo(file_orig ->hardlinks, bits_hardling_aux);
+      //puntero_datos = int_to_bits(bloque_datos_libre, 4);
+
+
+      int cnt10 = 0;
+      for(int n = 0; n < 32; n++){
+        if(n < 32 - cnt2){
+          bits_hardlink[n] = 0;
+          //printf("0");
+        }
+        else{
+          bits_hardlink[n] = bits_hardling_aux[cnt10];
+          //printf("%d", bits_tamano[cnt3]);
+          cnt10++;
+        }
+      }
 
       for (int i = 0 ; i <32 ; i ++){
         disco -> array_bloques[file_orig -> bloque_indice] -> array_bits[i] = bits_hardlink[i];
@@ -1213,14 +1367,20 @@ int cr_hardlink(unsigned disk, char* orig, char* dest){
         disco -> array_bloques[file_orig -> bloque_indice] -> array_bytes[i] = byte_hardlink;
         //fprintf(stderr, "\nBYTES HARDLINK %u\n", byte_hardlink );
       }
-
-
-  }else{
-    fprintf(stderr, "No queda espacio en directorio para agregar el hardlink en la particion %d\n", disk);
+      free(bits_indice);
+      //free(bits_hardlink);
+      free(file_orig);
+    }
+    else{
+      fprintf(stderr, "No queda espacio en directorio para agregar el hardlink en la particion %d\n", disk);
+      free(file_orig);
+      return 0;
+    }
   }
-}else{
-  fprintf(stderr, "No se ha encontrado el archivo %s en la particion %d\n",orig, disk);
-}
+  else{
+    fprintf(stderr, "No se ha encontrado el archivo %s en la particion %d\n",orig, disk);
+    return 0;
+  }
 }
 
 int cr_softlink(unsigned disk_orig, unsigned disk_dest, char* orig, char* dest){
@@ -1289,8 +1449,8 @@ int cr_softlink(unsigned disk_orig, unsigned disk_dest, char* orig, char* dest){
           bits_nombre[cont] = bits_nombre_aux[j];
           cont++;
         }
+        free(bits_nombre_aux );
       }
-
       int cont2 = 0;
       int *bits_indice = int_to_bits(0, 3);
       bits_indice[0] = 1;
@@ -1314,6 +1474,7 @@ int cr_softlink(unsigned disk_orig, unsigned disk_dest, char* orig, char* dest){
         disco -> array_bloques[pos_dir_dest] -> array_bytes[i] = byte_aux;
         //printf("\n");
       }
+      free(bits_indice);
     }
     else{
       fprintf(stderr, "No hay espacio en directorio para crear un softlink en la particion %d.\n", disk_dest);
@@ -1327,15 +1488,40 @@ int cr_softlink(unsigned disk_orig, unsigned disk_dest, char* orig, char* dest){
   return 1;
 }
 
-void cr_rm(unsigned disk, char* filename) {
-  if (cr_exists(disk, filename) == 1) {
+void cr_rm(unsigned disk, char* filename){
+  if (cr_exists(disk, filename) == 1){
     load = 1;
     crFILE* archivo = cr_open(disk, filename, 'r');
     load = 0;
+    if(archivo == 0){
+      free(archivo);
+      return;
+    }
     int bloque_directorio = (disk-1)*65536;
     archivo -> hardlinks --;
 
-    int *bits_hardlink = int_to_bits(archivo ->hardlinks, 4);
+    //int *bits_hardlink = int_to_bits(archivo ->hardlinks, 4);
+    int bits_hardlink[32];
+    cnt = 0;
+    int m = funcion_aux(archivo ->hardlinks);
+    cnt2 = 0;
+    int bits_hardling_aux[cnt];
+    binario_largo(archivo ->hardlinks, bits_hardling_aux);
+    //puntero_datos = int_to_bits(bloque_datos_libre, 4);
+
+
+    int cnt10 = 0;
+    for(int n = 0; n < 32; n++){
+      if(n < 32 - cnt2){
+        bits_hardlink[n] = 0;
+        //printf("0");
+      }
+      else{
+        bits_hardlink[n] = bits_hardling_aux[cnt10];
+        //printf("%d", bits_tamano[cnt3]);
+        cnt10++;
+      }
+    }
 
     for (int i = 0 ; i <32 ; i ++){
       disco -> array_bloques[archivo -> bloque_indice] -> array_bits[i] = bits_hardlink[i];
@@ -1376,11 +1562,11 @@ void cr_rm(unsigned disk, char* filename) {
       final += 32;
     }
 
-      if (archivo -> hardlinks  <= 0) { //actualizar el indice!!!!
-        // Cambio de bitmap de bloque indice
-        disco -> array_bloques[bloque_directorio + 1] -> array_bits[archivo -> bloque_indice] = 0; // aca esta el error valgrind
-        //disco -> array_bloques[bloque_directorio + 1] -> array_bytes[(int) archivo -> bloque_indice/ 8] -= // esta parte hay que cachar bien lo de la parte enterta y modulo
-        //disco -> array_bloques[bloque_directorio + 1] -> array_bytes[(int) pow(2, archivo -> bloque_indice % 8)]; //Duda
+    if (archivo -> hardlinks  <= 0) { 
+      // Cambio de bitmap de bloque indice
+      disco -> array_bloques[bloque_directorio + 1] -> array_bits[archivo -> bloque_indice] = 0; // aca esta el error valgrind
+      //disco -> array_bloques[bloque_directorio + 1] -> array_bytes[(int) archivo -> bloque_indice/ 8] -= // esta parte hay que cachar bien lo de la parte enterta y modulo
+      //disco -> array_bloques[bloque_directorio + 1] -> array_bytes[(int) pow(2, archivo -> bloque_indice % 8)]; //Duda
 
       // Cambio bitmap bloques de datos a partir de punteros directos
       for (int i = 12*8; i < (2044 * 4 + 12)*8; i = i + 32){
@@ -1424,6 +1610,8 @@ void cr_rm(unsigned disk, char* filename) {
       fprintf(stderr, "Se ha eliminado una referencia al archivo %s. Le quedan %i referencias. \n", filename, archivo -> hardlinks);
     }
     //cr_close(archivo); // no creo que haya que hacer esto, osi?
+    //free(bits_hardlink);
+    free(archivo);
   }
 
   else {
@@ -1433,6 +1621,7 @@ void cr_rm(unsigned disk, char* filename) {
 
 
 int cr_close(crFILE* file_desc){
+  fprintf(stderr, "\nCerrando archivo %s, esto puede tardar..\n", file_desc -> nombre);
 
   int pos_dir_orig = 0;
   if(file_desc -> disk == 1)
@@ -1446,17 +1635,46 @@ int cr_close(crFILE* file_desc){
 
   void* buffer = malloc(sizeof(unsigned char)*file_desc ->tamano);
   load2 = 1;
+  file_desc -> pos_lect = 0;
   cr_read(file_desc, buffer, file_desc -> tamano);
   load2 = 0;
-  for(int a = 0; a < pos_bloques_cargados; a++){
-    respaldar_a_bin(bloques_cargados[a]);
+
+
+  int bloque_dato;
+  int inicio = 12 * 8;//96
+  int parar = 0;
+
+  for(int i = 0; i < 2044; i++){
+    int bits_puntero_dato[32];
+    for(int j = inicio; j < (inicio + 32); j++){ //((int) pow(2,13) * 8) - 32
+        bits_puntero_dato[j - inicio] = disco -> array_bloques[file_desc -> bloque_indice] -> array_bits[j];
+        //fprintf(stderr, "%d", disco -> array_bloques[bloque_indice] -> array_bits[j]);
+    }
+    bloque_dato = bits_to_int(bits_puntero_dato, 32);
+
+    //fprintf(stderr, "bloque dato: %d\n", bloque_dato);
+    //fprintf(stderr, pos)
+    for(int a = 0; a < pos_bloques_cargados; a++){
+      //fprintf(stderr, "\nSoy bloque cargado: %d = bloque dato: %d\n", bloques_cargados[a] , bloque_dato);
+      if(bloques_cargados[a] == bloque_dato){
+        respaldar_a_bin(bloques_cargados[a]);
+      }
+    }
+    inicio += 32;
   }
+  
+
+  /*for(int a = 0; a < pos_bloques_cargados; a++){
+    respaldar_a_bin(bloques_cargados[a]);
+  }*/
 
   // Liberar bloque indice
-  //cr_close_bloque(file_desc -> bloque_indice);
+  respaldar_a_bin_bits(file_desc -> bloque_indice);
   respaldar_a_bin_bits(pos_dir_orig);
   respaldar_a_bin_bits(pos_dir_orig + 1);
-
+  free(buffer);
+  //free(file_desc -> nombre);
+  //free(file_desc);
   return 1;
 }
 
@@ -1468,28 +1686,12 @@ int cr_close(crFILE* file_desc){
 //////////////////////
 
 
-void cr_close_bloque(int i){
-  respaldar_a_bin_bits(i);
-  //free(disco -> array_bloques[i] -> array_bytes);
-  //free(disco -> array_bloques[i] -> array_bits);
-  //free(disco -> array_bloques[i]);
-}
-
 void respaldar_a_bin(int numero_bloque){
   FILE *fp = fopen(path_disk, "rb+");
   int posicion = numero_bloque * (int) pow(2,13);
   for (int j = 0; j < (int) pow(2,13); j++){
     fseek(fp, posicion + j, SEEK_SET);
     fwrite(&(disco -> array_bloques[numero_bloque] -> array_bytes[j]), sizeof(unsigned char), 1 , fp);
-
-    /* //Usando array de bits
-    int bits[8];
-    for (int u= 0; u < 8; u++){
-      bits[u] = disco -> array_bloques[numero_bloque] -> array_bits[u];
-    }
-    int bits_int = bits_to_int(bits, 8);
-    fwrite(bits_int, sizeof(unsigned char), 1 , fp);
-    */
   }
   fclose(fp);
 }
@@ -1508,6 +1710,7 @@ void respaldar_a_bin_bits(int numero_bloque){
     fseek(fp, posicion + j, SEEK_SET);
     fwrite(&(byte), sizeof(unsigned char), 1,  fp);
   }
+  fclose(fp);
 }
 
 int funcion_aux(unsigned long long n){
@@ -1532,7 +1735,6 @@ int* byte_to_bits(unsigned char byte){
     binary[7-n] = (byte >> n) & 1;
     //printf("bit %d: %d\n", 7-n, binary[7-n]);
   }
-
   return binary;
 }
 
@@ -1581,17 +1783,20 @@ int* int_to_bits(int n, int cantidad_bytes){
     bits_aux = byte_to_bits(bytes[i]);
     for(int j = 0; j < 8; j++){
       bits[cont2] = bits_aux[j];
+      //fprintf(stderr, "%d", bits[cont2]);
       cont2 ++;
     }
+    free(bits_aux);
   }
+  //fprintf(stderr, "\n");
   return bits;
 }
 
 void print_file(crFILE* file){
-  fprintf(stderr, "-----------------------------------------------------------\n");
+  fprintf(stderr, "-----------------------------------------------------------------\n");
   fprintf(stderr, "Nombre archivo: %s  Tamaño archivo: %llu Bytes\n", file -> nombre, file -> tamano);
   fprintf(stderr, "Cantidad de Hardlinks: %d\n", file -> hardlinks);
-  fprintf(stderr, "-----------------------------------------------------------\n");
+  fprintf(stderr, "-----------------------------------------------------------------\n");
   //for (int i = 0; i < file -> tamano; i++)
     //fprintf(stderr, "%c", file -> data[i]);
 }
@@ -1610,7 +1815,9 @@ Bloque* bloque_init(int i, int tipo_bloque, unsigned char *bytes_malloc){
       bloque -> array_bits[k] = binary[k-inicio_bits];
     }
     inicio_bits += 8;
+    free(binary);
   }
+
 
   /*for(int n = 0; n < (int)pow(2,13); n++)
     printf("%d", bloques[i]->array_bits[n]);
@@ -1700,6 +1907,7 @@ Disco* disco_init(char *filename){
   }
 
   fclose(archivo);
+  free(bytes_malloc);
   return disco;
 }
 
@@ -1834,6 +2042,37 @@ int cr_read_unload(crFILE* file, char* dest, int nbytes){
     }
   }
   file -> pos_lect = inicio_lectura_aux;
+  fclose(destino);
   return 1;
 }
 
+void cr_dismount(char *diskname){
+  //fprintf(stderr, "DISMOUNT\n");
+  for (int i = 0; i < pos_bloques_cargados; i ++){
+    free(disco -> array_bloques[bloques_cargados[i]]->array_bits);
+    free(disco -> array_bloques[bloques_cargados[i]]->array_bytes);
+    free(disco -> array_bloques[bloques_cargados[i]]);
+  }
+  int pos_dir = 0;
+
+  for (int i = 1; i < 5; i ++){
+      if(i == 1)
+        pos_dir = 0;
+      else if(i == 2)
+        pos_dir = 65536;
+      else if(i == 3)
+        pos_dir = 131072;
+      else
+        pos_dir = 196608;
+      free(disco -> array_bloques[pos_dir] -> array_bits);
+      free(disco -> array_bloques[pos_dir]->array_bytes);
+      free(disco -> array_bloques[pos_dir]);
+      free(disco -> array_bloques[pos_dir + 1] -> array_bits);
+      free(disco -> array_bloques[pos_dir + 1]->array_bytes);
+      free(disco -> array_bloques[pos_dir + 1]);
+
+  }
+  free(disco -> array_bloques);
+  free(disco);
+  free(bloques_cargados);
+}
