@@ -477,24 +477,28 @@ crFILE* cr_open(unsigned disk, char* filename, char mode){
           //fprintf(stderr, "FILE NAME: %s\n", aux2_filename);
 
           if (aux_particion == '1'){
-            crFILE *file = cr_open(1, aux2_filename,mode);
+            //crFILE *file = cr_open(1, aux2_filename,mode);
+            free(file);
             free(bits_entrada);
-            return file;
+            return cr_open(1, aux2_filename,mode);;
           }
           else if (aux_particion == '2'){
-            crFILE *file = cr_open(2, aux2_filename,mode);
+            //crFILE *file = cr_open(2, aux2_filename,mode);
+            free(file);
             free(bits_entrada);
-            return file;
+            return cr_open(2, aux2_filename,mode);
           }
           else if (aux_particion == '3'){
-            crFILE *file = cr_open(3, aux2_filename,mode);
+            //crFILE *file = cr_open(3, aux2_filename,mode);
+            free(file);
             free(bits_entrada);
-            return file;
+            return cr_open(3, aux2_filename,mode);
           }
           else if (aux_particion == '4'){
-            crFILE *file = cr_open(4, aux2_filename,mode);
+            //crFILE *file = cr_open(4, aux2_filename,mode);
+            free(file);
             free(bits_entrada);
-            return file;
+            return cr_open(4, aux2_filename,mode);
           }
         }
 
@@ -556,11 +560,13 @@ crFILE* cr_open(unsigned disk, char* filename, char mode){
       }
       else{
         fprintf(stderr, "El archivo %s ha sido eliminado.\n", filename);
+        free(bits_entrada);
         return 0;
       }
     }
     else{
       fprintf(stderr, "El archivo %s no existe.\n", filename);
+      free(bits_entrada);
       return 0;
     }
   }
@@ -663,12 +669,14 @@ crFILE* cr_open(unsigned disk, char* filename, char mode){
         }
         else{
           fprintf(stderr, "No hay espacio en directorio para crear el archivo.\n");
+          free(bits_entrada);
           return 0;
         }
       }
     }
     else{
       fprintf(stderr, "El archivo %s ya existe, no se puede sobre escribir.\n", filename);
+      free(bits_entrada);
       return 0;
     }
   }
@@ -677,6 +685,9 @@ crFILE* cr_open(unsigned disk, char* filename, char mode){
 }
 
 int cr_read(crFILE* file, void* buffer, int nbytes){
+  if(file == 0){
+    return 0;
+  }
   unsigned long long int bytes_restantes = file -> tamano - file -> pos_lect;
   int inicio_lectura = file ->  pos_lect;
   int bloque_actual = (int) (inicio_lectura / (int) pow(2,13));
@@ -696,7 +707,6 @@ int cr_read(crFILE* file, void* buffer, int nbytes){
   buff = (unsigned char*)buffer;
   int contador = 0;
   if(file -> tamano != 0){
-    //file -> data = malloc(sizeof(unsigned char)* (file -> tamano));
 
     int bloque_dato;
     int inicio = 12 * 8;//96
@@ -804,6 +814,9 @@ int cr_read(crFILE* file, void* buffer, int nbytes){
 }
 
 int cr_write(crFILE* file, void* buffer, int nbytes){
+  if(file == 0){
+    return 0;
+  }
   int pos_dir = 0;
   //printf("NOMBRE ARCHIVO: %s\n", file -> nombre);
   if(file -> disk == 1)
@@ -1156,7 +1169,8 @@ int cr_unload(unsigned disk, char* orig, char* dest){
     for(int i = 1 ; i < 5; i++){
       sprintf(buff, "%s/%d", dest, i);
       cr_unload(i, "particion", buff);
-    }}
+    }
+  }
 
   else if(strcmp(orig, "particion") == 0 && (pos_dir != -1)&& (disk != 0)){
     char file_disco[29];
@@ -1194,8 +1208,8 @@ int cr_unload(unsigned disk, char* orig, char* dest){
 
 int cr_load(unsigned disk, char* orig){
   //supuesto: orig no esta dentro de una carpeta
-  FILE *archivo;
-  if((archivo = fopen(orig,"rb"))!=NULL){
+  FILE *archivo = fopen(orig,"rb");
+  if(archivo !=NULL){
     //fprintf(stderr,"\nSe encontro el archivo\n");
     unsigned char bytes[(int)pow(2,4)]; //(int)pow(2,13)
     unsigned char* bytes_malloc = malloc(sizeof(unsigned char)*(int)pow(2,4));
@@ -1204,8 +1218,14 @@ int cr_load(unsigned disk, char* orig){
     int bytes_restantes;
     load = 1;
     crFILE *file_nuevo = cr_open(disk, orig, 'w');
-    void* buffer = malloc(sizeof(unsigned char)*(int)pow(2,4));
+    void* buffer;
     load = 0;
+    if(file_nuevo == 0){
+      fclose(archivo);
+      free(bytes_malloc);
+      free(file_nuevo);
+      return 0;
+    }
 
     while(fread(bytes,sizeof(bytes),1,archivo)){
       buffer = bytes;
@@ -1218,9 +1238,9 @@ int cr_load(unsigned disk, char* orig){
         //return -1;
       //}
     }
-    fclose(archivo);
+    //fclose(archivo);
     free(bytes_malloc);
-    free(buffer);
+    //free(buffer);
     free(file_nuevo);
   }
   else{
@@ -1250,6 +1270,7 @@ int cr_hardlink(unsigned disk, char* orig, char* dest){
     crFILE *file_orig = cr_open(disk, orig, 'r');
     load = 0;
     if(file_orig == 0){
+      free(file_orig);
       return 0;
     }
     char file_disco[32];
@@ -1350,15 +1371,16 @@ int cr_hardlink(unsigned disk, char* orig, char* dest){
       //free(bits_hardlink);
       free(file_orig);
     }
+    else{
+      fprintf(stderr, "No queda espacio en directorio para agregar el hardlink en la particion %d\n", disk);
+      free(file_orig);
+      return 0;
+    }
+  }
   else{
-    fprintf(stderr, "No queda espacio en directorio para agregar el hardlink en la particion %d\n", disk);
+    fprintf(stderr, "No se ha encontrado el archivo %s en la particion %d\n",orig, disk);
     return 0;
   }
-}
-else{
-  fprintf(stderr, "No se ha encontrado el archivo %s en la particion %d\n",orig, disk);
-  return 0;
-}
 }
 
 int cr_softlink(unsigned disk_orig, unsigned disk_dest, char* orig, char* dest){
@@ -1466,13 +1488,15 @@ int cr_softlink(unsigned disk_orig, unsigned disk_dest, char* orig, char* dest){
   return 1;
 }
 
-void cr_rm(unsigned disk, char* filename) {
-  if (cr_exists(disk, filename) == 1) {
+void cr_rm(unsigned disk, char* filename){
+  if (cr_exists(disk, filename) == 1){
     load = 1;
     crFILE* archivo = cr_open(disk, filename, 'r');
     load = 0;
-    if(archivo == 0)
+    if(archivo == 0){
+      free(archivo);
       return;
+    }
     int bloque_directorio = (disk-1)*65536;
     archivo -> hardlinks --;
 
@@ -1538,11 +1562,11 @@ void cr_rm(unsigned disk, char* filename) {
       final += 32;
     }
 
-      if (archivo -> hardlinks  <= 0) { //actualizar el indice!!!!
-        // Cambio de bitmap de bloque indice
-        disco -> array_bloques[bloque_directorio + 1] -> array_bits[archivo -> bloque_indice] = 0; // aca esta el error valgrind
-        //disco -> array_bloques[bloque_directorio + 1] -> array_bytes[(int) archivo -> bloque_indice/ 8] -= // esta parte hay que cachar bien lo de la parte enterta y modulo
-        //disco -> array_bloques[bloque_directorio + 1] -> array_bytes[(int) pow(2, archivo -> bloque_indice % 8)]; //Duda
+    if (archivo -> hardlinks  <= 0) { 
+      // Cambio de bitmap de bloque indice
+      disco -> array_bloques[bloque_directorio + 1] -> array_bits[archivo -> bloque_indice] = 0; // aca esta el error valgrind
+      //disco -> array_bloques[bloque_directorio + 1] -> array_bytes[(int) archivo -> bloque_indice/ 8] -= // esta parte hay que cachar bien lo de la parte enterta y modulo
+      //disco -> array_bloques[bloque_directorio + 1] -> array_bytes[(int) pow(2, archivo -> bloque_indice % 8)]; //Duda
 
       // Cambio bitmap bloques de datos a partir de punteros directos
       for (int i = 12*8; i < (2044 * 4 + 12)*8; i = i + 32){
@@ -2052,4 +2076,3 @@ void cr_dismount(char *diskname){
   free(disco);
   free(bloques_cargados);
 }
-

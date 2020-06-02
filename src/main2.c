@@ -17,7 +17,7 @@ int main(int argc, char *argv[]){
   fprintf(stderr,"\nCreo un archivo nuevo texto_nuevo.txt, en modo 'write' en la partición 4\n");
   crFILE * file = cr_open(4, "texto_nuevo.txt", 'w');//cambiar a w
   fprintf(stderr,"\nEscribimos en el archivo creado texto_nuevo.txt\n");
-  void* buffer = malloc(sizeof(unsigned char)*115);
+  void* buffer;
   buffer = "¡Hola! Somos el grupo DFLL del proyecto de Sistemas Operativos. ¡Hemos creado un sistema de archivos inreíble!";
   cr_write(file, buffer, 115);
   fprintf(stderr,"\nLeemos el archivo texto_nuevo.txt\n");
@@ -25,8 +25,8 @@ int main(int argc, char *argv[]){
   void* buffer3;
   cr_read(file, buffer3, 115);
   fprintf(stderr,"\nDescargamos el archivo creado texto_nuevo.txt\n");
-  void* buffer2 = malloc(sizeof(unsigned char)*31);
-  buffer2 = "\n\nVamos a descargar el archivo.";
+  void* buffer2;
+  buffer2 = "\nVamos a descargar el archivo.";
   cr_write(file, buffer2, 31);
   cr_unload(4, "texto_nuevo.txt", "file_disco/texto_nuevo.txt");
 
@@ -52,11 +52,12 @@ int main(int argc, char *argv[]){
   crFILE* file3 = cr_open(3, "1/guides.txt", 'r');
 
   /* CERRAMOS LOS ARCHIVOS ABIERTOS (ACTUALIZAR ARCHIVO .BIN) QUE NO HAN SIDO ELIMINADOS */ 
-  cr_close(file);
-  cr_close(file2);
-  //cr_close(file3);
-  //cr_close(file4);
-  //cr_close(file5);
+  if(file != 0){// PARA EL DISCO SIMDISKFORMAT, SE DEBE REVISAR QUE EL ARCHIVO EXISTA ANTES DE CERRARLO (NO EXISTE)
+    cr_close(file);
+  }
+  if(file2 != 0){ 
+    cr_close(file2);
+  }
 
   free(file);
   free(file2);
